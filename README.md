@@ -35,8 +35,8 @@ bun dev
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/AbuArwa001/itikafconnect.git
+cd itikafconnect
 ```
 
 Install dependencies:
