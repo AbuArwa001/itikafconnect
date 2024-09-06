@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
 import Sidebar from "../sidebar/Sidebar"; // Import Sidebar component
+import style from "./Navbar.module.css";
 
 function Navbar() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -14,7 +15,7 @@ function Navbar() {
   return (
     <>
       {/* Navbar */}
-      <div className="navbar bg-base-100">
+      <div className={`${style.bgColor} navbar bg-base-100`}>
         <div className="flex-none">
           <button className="btn btn-square btn-ghost" onClick={toggleSidebar}>
             <svg

@@ -8,7 +8,7 @@ interface SidebarProps {
 function Sidebar({ isExpanded }: SidebarProps) {
   return (
     <div
-      className={`h-screen fixed top-16 left-1 bg-gray-300 rounded-md transition-all duration-300 ease-in-out ${
+      className={`h-screen fixed top-16 left-0 bg-gray-300 rounded-md transition-all duration-300 ease-in-out ${
         isExpanded ? "w-32" : "w-16"
       }`}
     >
