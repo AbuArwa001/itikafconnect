@@ -1,4 +1,4 @@
-# Next.js Project
+# ItikafConnect Project
 [![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org)
 [![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
@@ -7,7 +7,7 @@ This is a Next.js project bootstrapped with `create-next-app`.
 
 ## Table of Contents
 
-- [Next.js Project](#nextjs-project)
+- [ItikafConnect Project](#itikafconnect-project)
   - [Table of Contents](#table-of-contents)
   - [Getting Started](#getting-started)
   - [Setup Instructions](#setup-instructions)
