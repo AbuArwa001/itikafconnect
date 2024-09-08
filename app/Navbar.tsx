@@ -2,20 +2,24 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
-import Sidebar from "../sidebar/Sidebar"; // Import Sidebar component
-import style from "./Navbar.module.css";
+import Sidebar from "./Sidebar"; // Import Sidebar component
+// import style from "./Navbar.module.css";
 
 function Navbar() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
-
   const toggleSidebar = () => {
     setIsSidebarExpanded(!isSidebarExpanded);
   };
+  const links = [
+    { label: "profile", href: "/profile" },
+    { label: "settings", href: "/settings" },
+    { label: "logout", href: "/logout" },
+  ];
 
   return (
     <>
       {/* Navbar */}
-      <div className={`${style.bgColor} navbar bg-base-100`}>
+      <nav className="navbar-light-gold navbar bg-base-100">
         <div className="flex-none">
           <button className="btn btn-square btn-ghost" onClick={toggleSidebar}>
             <svg
@@ -98,22 +102,20 @@ function Navbar() {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
-              <li>
-                <Link href="/profile" className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/settings">Settings</Link>
-              </li>
-              <li>
-                <Link href="/logout">Logout</Link>
-              </li>
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="justify-between">
+                    {link.label}
+                    {link.label === "profile" && (
+                      <span className="badge">New</span>
+                    )}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
-      </div>
+      </nav>
       {/* Sidebar */}
       <Sidebar isExpanded={isSidebarExpanded} />
     </>

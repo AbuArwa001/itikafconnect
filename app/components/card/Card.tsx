@@ -7,6 +7,8 @@ function Card() {
         <Image
           src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
           alt="Shoes"
+          width={384}
+          height={256}
         />
       </figure>
       <div className="card-body">

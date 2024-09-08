@@ -12,6 +12,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        light_gold: "#DB9E30",
       },
     },
   },
@@ -19,4 +20,5 @@ const config: Config = {
     daisyui,
   ],
 };
+
 export default config;
