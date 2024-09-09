@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { EventSchema } from "@/app/validationSchema";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
+import Spinner from "@/app/components/Spinner";
 
 type AddEventForm = z.infer<typeof EventSchema>;
 
@@ -27,6 +28,7 @@ const AddEvent = () => {
   });
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (data: AddEventForm) => {
     if (!data.date) {
@@ -36,6 +38,7 @@ const AddEvent = () => {
     const formattedDate = new Date(data.date).toISOString();
 
     try {
+      setIsSubmitting(true);
       const response = await axios.post("/api/events", {
         ...data,
         date: formattedDate,
@@ -43,6 +46,7 @@ const AddEvent = () => {
       console.log(response);
       router.push("/events");
     } catch (error) {
+      setIsSubmitting(false);
       setError("An error occurred while adding the event");
       console.error(error); // Log error details for debugging
     }
@@ -92,8 +96,10 @@ const AddEvent = () => {
           placeholder="Enter Location"
           {...register("location")}
         ></TextField.Root>
-        <ErrorMessage>{errors.location?.message}</ErrorMessage>
-        <Button type="submit">Add New Event</Button>
+        <ErrorMessage>{errors.location?.message}</ErrorMessage>.
+        <Button type="submit" disabled={isSubmitting}>
+          Add New Event{isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
   );
