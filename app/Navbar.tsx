@@ -2,8 +2,6 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
-// import Sidebar from "./Sidebar"; // Import Sidebar component
-// import style from "./Navbar.module.css";
 
 function Navbar() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -19,7 +17,7 @@ function Navbar() {
   return (
     <>
       {/* Navbar */}
-      <nav className="navbar-light-gold navbar bg-base-100">
+      <nav className="bg-light_gold navbar bg-base-100">
         <div className="flex-none">
           <button className="btn btn-square btn-ghost" onClick={toggleSidebar}>
             <svg
@@ -39,7 +37,7 @@ function Navbar() {
         </div>
 
         <div className="flex-1">
-          <Link href="/" className="btn btn-ghost text-xl">
+          <Link href="/" className="btn btn-ghost text-xl text-dark-brown">
             ItiKafConnect
           </Link>
         </div>
