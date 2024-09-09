@@ -1,19 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import prisma from "@/prisma/client";
-
-const EventSchema = z.object({
-  name: z.string().min(4).max(100),
-  date: z.string(),
-  location: z.string().min(4).max(100),
-  description: z.string().min(4).max(1000),
-});
+import { EventSchema } from "@/app/validationSchema";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const eventValidation = EventSchema.safeParse(body);
   if (!eventValidation.success) {
-    return NextResponse.json(eventValidation.error.errors, { status: 400 });
+    return NextResponse.json(eventValidation.error.format(), { status: 400 });
   }
   const createdEvent = await prisma.event.create({
     data: {
