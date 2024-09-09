@@ -35,8 +35,8 @@ export default function RootLayout({
       >
         <Theme>
           <Navbar />
-          <main>{children}</main>
-          <Footer />
+          <main className="p-50">{children}</main>
+          {/* <Footer /> */}
         </Theme>
       </body>
     </html>
