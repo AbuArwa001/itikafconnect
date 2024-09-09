@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
-import Sidebar from "./Sidebar"; // Import Sidebar component
+// import Sidebar from "./Sidebar"; // Import Sidebar component
 // import style from "./Navbar.module.css";
 
 function Navbar() {
@@ -117,7 +117,7 @@ function Navbar() {
         </div>
       </nav>
       {/* Sidebar */}
-      <Sidebar isExpanded={isSidebarExpanded} />
+      {/* <Sidebar isExpanded={isSidebarExpanded} /> */}
     </>
   );
 }
