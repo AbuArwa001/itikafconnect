@@ -50,7 +50,7 @@ function Sidebar({ isExpanded }: SidebarProps) {
     },
     {
       label: "events",
-      href: "/events",
+      href: "/events/list",
       icon: <MdEventAvailable className="size-5" />,
     },
   ];

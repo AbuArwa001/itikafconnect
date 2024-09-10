@@ -6,7 +6,7 @@ const EditButton = ({ eventId }: { eventId: number }) => {
   return (
     <Button>
       <Pencil2Icon />
-      <Link href={`/events/${eventId}/edit`}>Edit Event</Link>
+      <Link href={`/events/edit/${eventId}/`}>Edit Event</Link>
     </Button>
   );
 };

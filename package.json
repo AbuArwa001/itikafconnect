@@ -23,6 +23,7 @@
     "easymde": "^2.18.0",
     "medusajs": "^1.2.4",
     "next": "14.2.8",
+    "next-auth": "^4.24.7",
     "prisma": "^5.19.1",
     "react": "^18",
     "react-datepicker": "^7.3.0",

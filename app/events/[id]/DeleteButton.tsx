@@ -13,7 +13,7 @@ const DeleteButton = ({ eventId }: { eventId: number }) => {
     try {
       setIsDeleting(true);
       await axios.delete(`/api/events/${eventId}`);
-      router.push("/events");
+      router.push("/events/list");
       router.refresh();
     } catch (error) {
       setError(true);
