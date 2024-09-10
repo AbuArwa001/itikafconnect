@@ -45,12 +45,14 @@ const EventFrm = ({ event }: { event?: Event }) => {
         });
         console.log(response);
         router.push("/events");
+        router.refresh();
       } else {
         const response = await axios.post("/api/events", {
           ...data,
           date: formattedDate,
         });
         console.log(response);
+        router.push("/events");
         router.push("/events");
       }
     } catch (error) {

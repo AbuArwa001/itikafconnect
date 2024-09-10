@@ -1,7 +1,12 @@
-import EventFrm from "@/app/events/_components/EventForm";
 import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
+import dynamic from "next/dynamic";
+import EventFormSkeleton from "./loading";
 
+const EventFrm = dynamic(() => import("@/app/events/_components/EventForm"), {
+  ssr: false,
+  loading: () => <EventFormSkeleton />,
+});
 interface props {
   params: { id: string };
 }

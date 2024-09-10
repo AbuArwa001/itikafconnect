@@ -1,10 +1,13 @@
 "use client";
 import "easymde/dist/easymde.min.css";
+import dynamic from "next/dynamic";
 import "react-datepicker/dist/react-datepicker.css";
-import EventFrm from "../_components/EventForm";
-
+import EventFormSkeleton from "./loading";
 // type AddEventForm = z.infer<typeof EventSchema>;
-
+const EventFrm = dynamic(() => import("../_components/EventForm"), {
+  ssr: false,
+  loading: () => <EventFormSkeleton />,
+});
 const AddEvent = () => {
   return <EventFrm />;
 };

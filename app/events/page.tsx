@@ -61,4 +61,5 @@ const Events = async function () {
   );
 };
 
+export const revalidate = 0;
 export default Events;
