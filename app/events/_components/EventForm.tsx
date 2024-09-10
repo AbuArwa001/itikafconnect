@@ -53,7 +53,7 @@ const EventFrm = ({ event }: { event?: Event }) => {
         });
         console.log(response);
         router.push("/events");
-        router.push("/events");
+        router.refresh();
       }
     } catch (error) {
       setError("An error occurred while adding the event");
