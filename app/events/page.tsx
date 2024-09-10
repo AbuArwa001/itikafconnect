@@ -1,8 +1,8 @@
 import prisma from "@/prisma/client";
 import { Table } from "@radix-ui/themes";
 import EventStatusBadge from "@/app/components/eventStatusBadge";
-import Link from "next/link";
 import EventActions from "./EventActions";
+import Link from "../components/Link";
 
 const Events = async function () {
   const events = await prisma.event.findMany();
