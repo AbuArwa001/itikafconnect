@@ -1,18 +1,17 @@
 "use client";
-import { useForm, Controller } from "react-hook-form";
+import { ErrorMessage, Spinner } from "@/app/components";
+import { EventSchema } from "@/app/validationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, TextField } from "@radix-ui/themes";
-import { useState } from "react";
-import SimpleMDE from "react-simplemde-editor";
+import axios from "axios";
 import "easymde/dist/easymde.min.css";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { EventSchema } from "@/app/validationSchema";
+import { Controller, useForm } from "react-hook-form";
+import SimpleMDE from "react-simplemde-editor";
 import { z } from "zod";
-import ErrorMessage from "@/app/components/ErrorMessage";
-import Spinner from "@/app/components/Spinner";
 
 type AddEventForm = z.infer<typeof EventSchema>;
 

@@ -2,7 +2,6 @@ import prisma from "@/prisma/client";
 import { Card, Flex, Heading } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import delay from "delay";
 
 interface props {
   params: {
@@ -10,7 +9,6 @@ interface props {
   };
 }
 const EvenDetails = async ({ params: { id } }: props) => {
-  await delay(3000);
   const event = await prisma.event.findUnique({
     where: {
       id: parseInt(id),
