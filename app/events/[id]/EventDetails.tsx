@@ -13,7 +13,7 @@ const EventDetails = ({ event }: { event: Event }) => {
         <p>Location: {event.location}</p>
         <p>{event.date.toDateString()}</p>
       </Flex>
-      <Card className="prose" mt={`3`}>
+      <Card className="prose max-w-full" mt={`3`}>
         <ReactMarkdown>{event.description}</ReactMarkdown>
       </Card>
     </>
