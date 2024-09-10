@@ -1,6 +1,6 @@
 "use client";
 import { useForm, Controller } from "react-hook-form";
-import { Button, Callout, TextField, Text } from "@radix-ui/themes";
+import { Button, Callout, TextField } from "@radix-ui/themes";
 import { useState } from "react";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
@@ -21,7 +21,6 @@ const AddEvent = () => {
     register,
     control,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<AddEventForm>({
     resolver: zodResolver(EventSchema),
@@ -46,9 +45,10 @@ const AddEvent = () => {
       console.log(response);
       router.push("/events");
     } catch (error) {
-      setIsSubmitting(false);
       setError("An error occurred while adding the event");
       console.error(error); // Log error details for debugging
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -79,12 +79,9 @@ const AddEvent = () => {
           render={({ field }) => (
             <ReactDatePicker
               selected={field.value ? new Date(field.value) : null}
-              onChange={(date: Date | null) => {
-                // Convert date to ISO format and update form state
-                const isoDate = date ? new Date(date).toISOString() : "";
-                setValue("date", isoDate);
-                field.onChange(isoDate); // Trigger field change if needed
-              }}
+              onChange={(date: Date | null) =>
+                field.onChange(date ? date.toISOString() : null)
+              } // Directly handle onChange
               dateFormat="yyyy-MM-dd"
               placeholderText="Select event date"
               className="w-full p-2 border rounded"

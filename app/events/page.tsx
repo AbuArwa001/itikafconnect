@@ -1,18 +1,16 @@
 "use client";
 import prisma from "@/prisma/client";
-import { Button, Table } from "@radix-ui/themes";
-import Link from "next/link";
+import { Table } from "@radix-ui/themes";
 import EventStatusBadge from "@/app/components/eventStatusBadge";
+import delay from "delay";
+import EventActions from "./EventActions";
 
 const Events = async function () {
   const events = await prisma.event.findMany();
+  await delay(3000);
   return (
     <div className="m-10">
-      <div className="mb-5">
-        <Button>
-          <Link href="/events/new">Add event</Link>
-        </Button>
-      </div>
+      <EventActions />
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
