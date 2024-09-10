@@ -1,7 +1,7 @@
 import prisma from "@/prisma/client";
 import { Card, Flex, Heading } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
-import React from "react";
+import ReactMarkdown from "react-markdown";
 
 interface props {
   params: {
@@ -27,8 +27,8 @@ const EvenDetails = async ({ params: { id } }: props) => {
         <p>Location: {event.location}</p>
         <p>{event.date.toDateString()}</p>
       </Flex>
-      <Card>
-        <p>{event.description}</p>
+      <Card className="prose" mt={`3`}>
+        <ReactMarkdown>{event.description}</ReactMarkdown>
       </Card>
     </div>
   );
