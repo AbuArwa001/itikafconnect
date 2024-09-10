@@ -31,3 +31,22 @@ export async function PATCH(
 
   return NextResponse.json(updatedEvent, { status: 200 });
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const event = await prisma.event.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+  if (!event) {
+    return NextResponse.json({ message: "Invalid Event" }, { status: 404 });
+  }
+  await prisma.event.delete({
+    where: {
+      id: event.id,
+    },
+  });
+
+  return NextResponse.json({ message: "Event deleted" }, { status: 200 });
+}
