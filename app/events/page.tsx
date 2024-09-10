@@ -1,13 +1,11 @@
-"use client";
 import prisma from "@/prisma/client";
 import { Table } from "@radix-ui/themes";
 import EventStatusBadge from "@/app/components/eventStatusBadge";
-import delay from "delay";
+import Link from "next/link";
 import EventActions from "./EventActions";
 
 const Events = async function () {
   const events = await prisma.event.findMany();
-  await delay(3000);
   return (
     <div className="m-10">
       <EventActions />
@@ -36,7 +34,7 @@ const Events = async function () {
           {events.map((event) => (
             <Table.Row key={event.id}>
               <Table.Cell>
-                {event.name}
+                <Link href={`/events/${event.id}`}>{event.name}</Link>
                 <div className="block md:hidden ">
                   <EventStatusBadge status={event.status} />
                 </div>
