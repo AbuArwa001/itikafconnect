@@ -2,6 +2,7 @@
 import { ErrorMessage, Spinner } from "@/app/components";
 import { EventSchema } from "@/app/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Event } from "@prisma/client";
 import { Button, Callout, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
@@ -12,7 +13,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
 import SimpleMDE from "react-simplemde-editor";
 import { z } from "zod";
-import { Event } from "@prisma/client";
 
 type EventForm = z.infer<typeof EventSchema>;
 
@@ -38,12 +38,21 @@ const EventFrm = ({ event }: { event?: Event }) => {
 
     try {
       setIsSubmitting(true);
-      const response = await axios.post("/api/events", {
-        ...data,
-        date: formattedDate,
-      });
-      console.log(response);
-      router.push("/events");
+      if (event) {
+        const response = await axios.patch(`/api/events/${event.id}`, {
+          ...data,
+          date: formattedDate,
+        });
+        console.log(response);
+        router.push("/events");
+      } else {
+        const response = await axios.post("/api/events", {
+          ...data,
+          date: formattedDate,
+        });
+        console.log(response);
+        router.push("/events");
+      }
     } catch (error) {
       setError("An error occurred while adding the event");
       console.error(error); // Log error details for debugging
@@ -99,7 +108,8 @@ const EventFrm = ({ event }: { event?: Event }) => {
         ></TextField.Root>
         <ErrorMessage>{errors.location?.message}</ErrorMessage>.
         <Button type="submit" disabled={isSubmitting}>
-          Add New Event{isSubmitting && <Spinner />}
+          {event ? "Update Event" : "Add New Event"}{" "}
+          {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>
