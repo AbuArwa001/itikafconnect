@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Profile from "./Profile";
 import NavItem from "./NavItem";
 import { useSession } from "next-auth/react";
-import { Container } from "@radix-ui/themes";
+import { Skeleton } from "@/app/components";
 
 function Navbar() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -42,6 +42,9 @@ function Navbar() {
           </Link>
         </div>
         <div className="flex-none">
+          {status === "loading" && <Skeleton width="3rem" height="3rem" /> && (
+            <Skeleton width="3rem" />
+          )}
           {status === "authenticated" && <NavItem />}
           {status === "authenticated" && (
             <Profile user={session?.user ?? null} />
