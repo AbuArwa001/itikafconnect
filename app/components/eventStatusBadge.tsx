@@ -6,7 +6,7 @@ const eventStatus: Record<
   { label: string; color: "red" | "violet" | "green" }
 > = {
   ONGOING: { label: "ongoing", color: "green" },
-  ENDED: { label: "ended", color: "red" },
+  ENDED: { label: "ended", color: "violet" },
   CANCELLED: { label: "Cancelled", color: "red" },
 };
 

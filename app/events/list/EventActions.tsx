@@ -1,15 +1,15 @@
-import { Button } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import Link from "next/link";
+import EventStatusFilter from "./EventStatusFilter";
 
 const EventActions = () => {
   return (
-    <div>
-      <div className="mb-5">
-        <Button>
-          <Link href="/events/new">Add event</Link>
-        </Button>
-      </div>
-    </div>
+    <Flex mb="5" justify="between">
+      <EventStatusFilter />
+      <Button>
+        <Link href="/events/new">Add event</Link>
+      </Button>
+    </Flex>
   );
 };
 
