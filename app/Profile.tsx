@@ -1,7 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-const Profile = () => {
+
+interface User {
+  name?: string | null | undefined;
+  email?: string | null | undefined;
+  image?: string | null | undefined;
+}
+interface ProfileProps {
+  user: User | null;
+}
+const Profile = ({ user }: ProfileProps) => {
   const links = [
+    { label: user?.email, href: "/profile" },
     { label: "profile", href: "/profile" },
     { label: "settings", href: "/settings" },
     { label: "logout", href: "/api/auth/signout" },
@@ -16,7 +26,7 @@ const Profile = () => {
         <div className="w-10 rounded-full">
           <Image
             alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+            src={user!.image!}
             width={10}
             height={10}
           />

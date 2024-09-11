@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Profile from "./Profile";
 import NavItem from "./NavItem";
 import { useSession } from "next-auth/react";
+import { Container } from "@radix-ui/themes";
 
 function Navbar() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -15,6 +16,7 @@ function Navbar() {
   return (
     <>
       {/* Navbar */}
+      {/* <Container> */}
       <nav className="bg-light_gold navbar bg-base-100">
         <div className="flex-none">
           <button className="btn btn-square btn-ghost" onClick={toggleSidebar}>
@@ -41,12 +43,15 @@ function Navbar() {
         </div>
         <div className="flex-none">
           {status === "authenticated" && <NavItem />}
-          {status === "authenticated" && <Profile />}
+          {status === "authenticated" && (
+            <Profile user={session?.user ?? null} />
+          )}
           {status === "unauthenticated" && (
             <Link href="/api/auth/signin">Login</Link>
           )}
         </div>
       </nav>
+      {/* </Container> */}
       {/* Sidebar */}
       {/* <Sidebar isExpanded={isSidebarExpanded} /> */}
     </>
