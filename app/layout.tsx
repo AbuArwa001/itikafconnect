@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./Navbar";
+import AuthProvider from "./auth/Provider";
 // import Footer from "./Footer";
 
 const geistSans = localFont({
@@ -33,13 +34,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Theme>
-          <Navbar />
-          <main className="p-10">
-            <Container>{children}</Container>
-          </main>
-          {/* <Footer /> */}
-        </Theme>
+        <AuthProvider>
+          <Theme>
+            <Navbar />
+            <main className="p-10">
+              <Container>{children}</Container>
+            </main>
+            {/* <Footer /> */}
+          </Theme>
+        </AuthProvider>
       </body>
     </html>
   );
