@@ -42,7 +42,7 @@ const Events = async function () {
                 <EventStatusBadge status={event.status} />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {event.date.toString()}
+                {event.date!.toString()}
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 {event.location}

@@ -106,7 +106,7 @@ const EventFrm = ({ event }: { event?: Event }) => {
         <TextField.Root
           placeholder="Enter Location"
           {...register("location")}
-          // defaultValue={event!.location}
+          defaultValue={event!.location!}
         ></TextField.Root>
         <ErrorMessage>{errors.location?.message}</ErrorMessage>.
         <Button type="submit" disabled={isSubmitting}>
