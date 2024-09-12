@@ -7,6 +7,7 @@ import EventsCharts from "./EventsCharts";
 import { Flex, Grid } from "@radix-ui/themes";
 import EventSummary from "./EventSummary";
 import LatestEvents from "./LatestEvents";
+import { Metadata } from "next";
 // import LatestEvents from "./LatestEvents";
 
 export default async function Home() {
@@ -37,3 +38,8 @@ export default async function Home() {
     </Grid>
   );
 }
+
+export const metadata: Metadata = {
+  title: "ItikafConnect - Dashboard",
+  description: "View summary of events and latest events",
+};

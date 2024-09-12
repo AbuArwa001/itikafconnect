@@ -4,10 +4,12 @@ import { EventStatus } from "@prisma/client";
 import EventActions from "./EventActions";
 import EventsTable, { columnNames, eventQuery } from "./EventsTable";
 import { Flex } from "@radix-ui/themes";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: eventQuery;
 }
+
 const Events = async function ({ searchParams }: Props) {
   const statuses = Object.values(EventStatus);
   const status = statuses.includes(searchParams.status)
@@ -42,4 +44,9 @@ const Events = async function ({ searchParams }: Props) {
 };
 
 export const revalidate = 0;
+export const metadata: Metadata = {
+  title: "ItikafConnect - Events",
+  description: "View all events",
+};
+
 export default Events;

@@ -3,6 +3,7 @@ import prisma from "@/prisma/client";
 import { Box, Flex, Grid } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
 import EventDetails from "./EventDetails";
@@ -11,13 +12,12 @@ interface props {
     id: string;
   };
 }
+const fetchEvent = cache((eventId: number) =>
+  prisma.event.findUnique({ where: { id: eventId } })
+);
 const EventDetail = async ({ params: { id } }: props) => {
   const session = await getServerSession(authOptions);
-  const event = await prisma.event.findUnique({
-    where: {
-      id: parseInt(id),
-    },
-  });
+  const event = await fetchEvent(parseInt(id));
   if (!event) notFound();
   return (
     <Grid columns={{ initial: "1", sm: "5" }} gap="3">
@@ -35,5 +35,11 @@ const EventDetail = async ({ params: { id } }: props) => {
     </Grid>
   );
 };
-
+export async function generateMetadata({ params }: props) {
+  const event = await fetchEvent(parseInt(params.id));
+  return {
+    title: event?.name,
+    description: "View details of event " + event?.id,
+  };
+}
 export default EventDetail;
