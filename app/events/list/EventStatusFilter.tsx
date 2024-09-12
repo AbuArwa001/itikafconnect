@@ -1,6 +1,7 @@
 "use client";
 import { EventStatus } from "@prisma/client";
 import { Select } from "@radix-ui/themes";
+import { useRouter } from "next/navigation";
 
 const statuses: { label: string; value?: EventStatus }[] = [
   { label: "All" },
@@ -10,8 +11,14 @@ const statuses: { label: string; value?: EventStatus }[] = [
 ];
 
 const EventStatusFilter = () => {
+  const router = useRouter();
   return (
-    <Select.Root>
+    <Select.Root
+      onValueChange={(status) => {
+        const filter = status ? `?status=${status}` : "";
+        router.push(`/events/list/${filter}`);
+      }}
+    >
       <Select.Trigger placeholder="Filter by Status.." />
       <Select.Content>
         {statuses.map((status) => (
