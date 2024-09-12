@@ -2,7 +2,8 @@
 // import Header from "./components/layout/header/Header";
 
 import prisma from "@/prisma/client";
-import EventSummary from "./EventSummary";
+// import EventSummary from "./EventSummary";
+import EventsCharts from "./EventsCharts";
 // import LatestEvents from "./LatestEvents";
 
 export default async function Home() {
@@ -21,5 +22,6 @@ export default async function Home() {
       status: "CANCELLED",
     },
   });
-  return <EventSummary onGoing={onGoing} ended={ended} cancelled={cancelled} />;
+  // return  <EventSummary onGoing={onGoing} ended={ended} cancelled={cancelled} />;
+  return <EventsCharts onGoing={onGoing} ended={ended} cancelled={cancelled} />;
 }
