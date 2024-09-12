@@ -4,7 +4,7 @@ import EventStatusFilter from "./EventStatusFilter";
 
 const EventActions = () => {
   return (
-    <Flex mb="5" justify="between">
+    <Flex justify="between">
       <EventStatusFilter />
       <Button>
         <Link href="/events/new">Add event</Link>
