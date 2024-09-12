@@ -37,10 +37,16 @@ const Events = async function ({ searchParams }: Props) {
       className: "hidden md:table-cell",
     },
   ];
+  const orderBy = columns
+    .map((column) => column.value)
+    .includes(searchParams.orderBy)
+    ? { [searchParams.orderBy]: "asc" }
+    : undefined;
   const events = await prisma.event.findMany({
     where: {
       status,
     },
+    orderBy,
   });
 
   return (
