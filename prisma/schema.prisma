@@ -16,7 +16,7 @@ datasource db {
 model Event {
   id           Int            @id @default(autoincrement())
   name         String
-  description  String?
+  description  String         @db.Text
   date         DateTime?
   location     String?
   status       EventStatus    @default(ONGOING)
