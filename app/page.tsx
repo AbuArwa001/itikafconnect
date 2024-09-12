@@ -4,6 +4,9 @@
 import prisma from "@/prisma/client";
 // import EventSummary from "./EventSummary";
 import EventsCharts from "./EventsCharts";
+import { Flex, Grid } from "@radix-ui/themes";
+import EventSummary from "./EventSummary";
+import LatestEvents from "./LatestEvents";
 // import LatestEvents from "./LatestEvents";
 
 export default async function Home() {
@@ -23,5 +26,14 @@ export default async function Home() {
     },
   });
   // return  <EventSummary onGoing={onGoing} ended={ended} cancelled={cancelled} />;
-  return <EventsCharts onGoing={onGoing} ended={ended} cancelled={cancelled} />;
+  // return <EventsCharts onGoing={onGoing} ended={ended} cancelled={cancelled} />;
+  return (
+    <Grid columns={{ initial: "1", md: "2" }} gap="4">
+      <Flex direction="column" gap="2">
+        <EventSummary onGoing={onGoing} ended={ended} cancelled={cancelled} />
+        <EventsCharts onGoing={onGoing} ended={ended} cancelled={cancelled} />
+      </Flex>
+      <LatestEvents />
+    </Grid>
+  );
 }
