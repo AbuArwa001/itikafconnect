@@ -1,14 +1,15 @@
-import authOptions from "@/app/auth/AuthOptions";
+// import authOptions from "@/app/auth/AuthOptions";
 import { EventSchema } from "@/app/validationSchema";
+import { auth } from "@/auth";
 import prisma from "@/prisma/client";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
@@ -43,7 +44,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }

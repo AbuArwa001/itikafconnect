@@ -75,10 +75,16 @@ enum DocumentType {
   Photo
 }
 
-model Role {
-  id       Int    @id @default(autoincrement())
-  roleName String @unique @db.VarChar(50)
-  users    User[]
+// model Role {
+//   id       Int      @id @default(autoincrement())
+//   roleName UserRole @unique @default(USER)
+//   users    User[]
+// }
+
+enum UserRole {
+  ADMIN
+  USER
+  SUPERADMIN
 }
 
 model Registration {
@@ -103,14 +109,16 @@ model User {
   id            String         @id @default(cuid())
   name          String?
   email         String?        @unique
+  password      String?
   emailVerified DateTime?      @map("email_verified")
   image         String?
   phone         String?        @db.VarChar(20)
   address       String?        @db.Text
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-  roleId        Int
-  role          Role           @relation(fields: [roleId], references: [id])
+  // roleId        Int
+  // role          Role           @default(USER) @relation(fields: [roleId], references: [id])
+  role          UserRole       @default(USER)
   accounts      Account[]
   sessions      Session[]
   registrations Registration[]

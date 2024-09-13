@@ -6,3 +6,8 @@ export const EventSchema = z.object({
   location: z.string().min(4, "Location is Required").max(100),
   description: z.string().min(4, "Please provide Description").max(300),
 });
+
+export const LoginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1, "Pease enter password"),
+});
