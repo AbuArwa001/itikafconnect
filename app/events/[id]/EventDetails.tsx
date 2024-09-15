@@ -6,7 +6,7 @@ import ReactMarkdown from "react-markdown";
 const EventDetails = async ({ event }: { event: Event }) => {
   return (
     <>
-      <Heading>EvenDetails</Heading>
+      <Heading>Event Details</Heading>
       <br />
       <Heading as="h2">{event.name}</Heading>
       <Flex gap={`2`} my={`3`}>

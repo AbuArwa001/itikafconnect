@@ -1,6 +1,6 @@
 // import authOptions from "@/app/auth/AuthOptions";
 import prisma from "@/prisma/client";
-import { Box, Flex, Grid, Heading } from "@radix-ui/themes";
+import { Badge, Box, Card, Flex, Grid, Heading } from "@radix-ui/themes";
 // import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import { cache } from "react";
@@ -9,6 +9,7 @@ import EditButton from "./EditButton";
 import EventDetails from "./EventDetails";
 import { auth } from "@/auth";
 import RegisterEventButton from "./RegisterEventButton";
+import { EventStatusBadge } from "@/app/components";
 interface props {
   params: {
     id: string;
@@ -18,7 +19,7 @@ const fetchEvent = cache((eventId: number) =>
   prisma.event.findUnique({ where: { id: eventId } })
 );
 const fetchRegistration = cache((userId: string, eventId: number) =>
-  prisma.registration.findMany({
+  prisma.registration.findFirst({
     where: {
       userId: userId,
       eventId: eventId,
@@ -27,10 +28,13 @@ const fetchRegistration = cache((userId: string, eventId: number) =>
 );
 const EventDetail = async ({ params: { id } }: props) => {
   const session = await auth();
+  const isAdmin = session?.user.role === "ADMIN";
   const event = await fetchEvent(parseInt(id));
   if (!event) notFound();
   const events = await fetchRegistration(session?.user.id || "", event.id);
-  console.log(events);
+  const eventStatus = !events ? { status: "Not Registered" } : events;
+  // events.length !== 0 ? events = ["Not Registered"] : events;
+  console.log(eventStatus);
   return (
     <Grid columns={{ initial: "1", sm: "5" }} gap="3">
       <Box className="md:col-span-4">
@@ -39,14 +43,23 @@ const EventDetail = async ({ params: { id } }: props) => {
       <Box>
         {session && (
           <Flex direction="column" gap="4">
-            <EditButton eventId={event.id} />
-            <DeleteButton eventId={event.id} />
-            <RegisterEventButton />
+            {isAdmin && (
+              <>
+                <EditButton eventId={event.id} />
+                <DeleteButton eventId={event.id} />
+              </>
+            )}
+            <RegisterEventButton
+              eventId={event.id}
+              userId={session.user.id}
+              eventStatus={event.status}
+              status={events?.status || ""}
+            />
           </Flex>
         )}
         <br />
-        <Box>
-          <Heading className="border-2 rounded-md">
+        <Card>
+          <Heading className="border-2 rounded-md  p-1">
             Registration Details
           </Heading>
           {session && (
@@ -54,16 +67,15 @@ const EventDetail = async ({ params: { id } }: props) => {
               <div>
                 <Heading>Registration Status</Heading>
                 <div>
-                  <span>{session.user.id}</span>
+                  {!events && <Badge color="red">{eventStatus.status}</Badge>}
+                  {events && <Badge color="green">{eventStatus.status}</Badge>}
                 </div>
-                <Heading>Event Status</Heading>
-                <div>
-                  <span></span>
-                </div>
+                <h5>Event Status</h5>
+                <div>{<EventStatusBadge status={event.status} />}</div>
               </div>
             </Flex>
           )}
-        </Box>
+        </Card>
       </Box>
     </Grid>
   );

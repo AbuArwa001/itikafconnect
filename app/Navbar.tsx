@@ -47,6 +47,14 @@ function Navbar() {
               href="/events/list"
               className="btn btn-ghost text-xl text-dark-brown"
             >
+              MyEvents
+            </Link>
+          </div>
+          <div className="flex-1">
+            <Link
+              href="/events/list"
+              className="btn btn-ghost text-xl text-dark-brown"
+            >
               Events
             </Link>
           </div>

@@ -56,7 +56,7 @@ export default async function RootLayout({
         <QueryClientProvider>
           <AuthProvider>
             <Theme
-              className={`${classLogin} grid  min-h-screen grid-rows-[auto,auto] grid-cols-[auto_1fr]`}
+              className={`${classLogin} grid  min-h-screen grid-rows-[auto_1fr] grid-cols-[auto_1fr]`}
             >
               {/* First child: Navbar, spans two columns */}
               {session?.user && (
