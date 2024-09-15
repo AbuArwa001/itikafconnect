@@ -35,8 +35,21 @@ export default async function RootLayout({
     const session = await auth();
     return session;
   };
+  let classLogin = "";
   const session = await getsession();
-  console.log(session?.user);
+  if (session?.user === undefined) {
+    console.log("session", session?.user);
+    const arrClas = [
+      "justify-center",
+      "items-center",
+      "h-full",
+      "flex",
+      "bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))]",
+      "from-extra_light_gold",
+      "to-light_gold",
+    ];
+    classLogin = arrClas.join(" ");
+  }
   return (
     <html lang="en">
       <body
@@ -44,9 +57,9 @@ export default async function RootLayout({
       >
         <QueryClientProvider>
           <AuthProvider>
-            <Theme>
+            <Theme className={`${classLogin}`}>
               {session?.user && <Navbar />}
-              <main className="pt-5">
+              <main className="">
                 <Container>{children}</Container>
               </main>
               {/* <Footer /> */}

@@ -39,19 +39,17 @@ const EventFrm = ({ event }: { event?: Event }) => {
     try {
       setIsSubmitting(true);
       if (event) {
-        const response = await axios.patch(`/api/events/${event.id}`, {
+        await axios.patch(`/api/events/${event.id}`, {
           ...data,
           date: formattedDate,
         });
-        console.log(response);
         router.push("/events/list");
         router.refresh();
       } else {
-        const response = await axios.post("/api/events", {
+        await axios.post("/api/events", {
           ...data,
           date: formattedDate,
         });
-        console.log(response);
         router.push("/events/list");
         router.refresh();
       }

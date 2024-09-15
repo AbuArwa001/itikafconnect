@@ -19,9 +19,10 @@ const authConfig: NextAuthConfig = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     Credentials({
-      credentials: {
-        // Define your credentials here
-      },
+      // credentials: {
+      //   email: { label: "Email", type: "email" },
+      //   password: { label: "Password", type: "password" },
+      // },
       async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials);
         if (validatedFields.success) {

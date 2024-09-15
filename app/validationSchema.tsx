@@ -8,6 +8,11 @@ export const EventSchema = z.object({
 });
 
 export const LoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, "Pease enter password"),
+  email: z.string().email("Email is Required"),
+  password: z.string().min(1, "Password is Required"),
+});
+export const SignupSchema = z.object({
+  name: z.string().min(4, "Name Is Required").max(100),
+  email: z.string().email("Please enter a valid email"),
+  password: z.string().min(6, "Minimum 6 characters required"),
 });

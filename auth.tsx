@@ -1,47 +1,33 @@
 import authConfig from "@/auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
-import NextAuth, { DefaultSession, type Session } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import { PrismaClient, UserRole } from "@prisma/client";
+import NextAuth from "next-auth";
 import { getUserById } from "./app/users/users";
 
 const prisma = new PrismaClient();
 
-/**
- * This module augments the `next-auth` types to include custom properties in the `Session` interface.
- */
-declare module "next-auth" {
-  interface Session {
-    user: {
-      /** The user's role */
-      role: string;
-    } & DefaultSession["user"];
-  }
-}
-
-// Extending the JWT interface to include `role`
-declare module "next-auth/jwt" {
-  interface JWT {
-    role: string;
-  }
-}
-
 export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
-    async session({ session, token }: { session: Session; token: JWT }) {
-      if (token.sub && session.user) {
+    // Handle session callback, customize session object with user role
+    async session({ session, token }) {
+      // console.log("sessionToken", token);
+      if (token.sub) {
         session.user.id = token.sub;
       }
-      if (token.role && session.user) {
-        session.user.role = token.role;
+      if (token.role) {
+        session.user.role = token.role as UserRole;
+        // console.log("sessionUser", session.user);
       }
       return session;
     },
-    async jwt({ token }: { token: JWT }) {
+
+    // Handle JWT callback to add role to the token
+    async jwt({ token }) {
       if (!token.sub) return token;
       const existingUser = await getUserById(token.sub);
       if (existingUser) {
         token.role = existingUser.role;
+        // console.log("jwt", token);
       }
       return token;
     },

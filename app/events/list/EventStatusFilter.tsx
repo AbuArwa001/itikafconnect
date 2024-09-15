@@ -28,8 +28,8 @@ const EventStatusFilter = () => {
     >
       <Select.Trigger placeholder="Filter by Status.." />
       <Select.Content>
-        {statuses.map((status) => (
-          <Select.Item key={status.value} value={status.value || " "}>
+        {statuses.map((status, index) => (
+          <Select.Item key={index} value={status.value || " "}>
             {status.label}
           </Select.Item>
         ))}
