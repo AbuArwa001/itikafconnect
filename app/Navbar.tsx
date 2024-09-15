@@ -1,10 +1,11 @@
 "use client"; // Ensures the component is treated as a Client Component
-import Link from "next/link";
-import React, { useState } from "react";
-import Profile from "./Profile";
-import NavItem from "./NavItem";
-import { useSession } from "next-auth/react";
 import { Skeleton } from "@/app/components";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useState } from "react";
+// import NavItem from "./NavItem";
+import Profile from "./Profile";
+import { Flex } from "@radix-ui/themes";
 
 function Navbar() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -17,7 +18,7 @@ function Navbar() {
     <>
       {/* Navbar */}
       {/* <Container> */}
-      <nav className="bg-light_gold navbar bg-base-100">
+      <nav className="flex justify-between bg-light_gold navbar bg-base-100 col-span-2 h-auto">
         <div className="flex-none">
           <button className="btn btn-square btn-ghost" onClick={toggleSidebar}>
             <svg
@@ -34,28 +35,49 @@ function Navbar() {
               ></path>
             </svg>
           </button>
+          <div className="flex-1">
+            <Link href="/" className="btn btn-ghost text-xl text-dark-brown">
+              ItiKafConnect
+            </Link>
+          </div>
         </div>
-
-        <div className="flex-1">
-          <Link href="/" className="btn btn-ghost text-xl text-dark-brown">
-            ItiKafConnect
-          </Link>
-        </div>
-        <div className="flex-none">
-          {status === "loading" && <Skeleton width="3rem" height="3rem" /> && (
-            <Skeleton width="3rem" />
-          )}
-          {status === "authenticated" && <NavItem />}
-          {status === "authenticated" && (
-            <Profile user={session?.user ?? null} />
-          )}
-          {status === "unauthenticated" && (
-            <Link href="/api/auth/signin">Login</Link>
-          )}
-        </div>
+        <Flex align="end">
+          <div className="flex-1">
+            <Link
+              href="/events/list"
+              className="btn btn-ghost text-xl text-dark-brown"
+            >
+              Events
+            </Link>
+          </div>
+          <div className="flex-1">
+            <Link href="/" className="btn btn-ghost text-xl text-dark-brown">
+              Calendar
+            </Link>
+          </div>
+          <div className="flex-none">
+            {status === "loading" && (
+                <Skeleton width="3rem" height="3rem" />
+              ) && <Skeleton width="3rem" />}
+            {/* {status === "authenticated" && <NavItem />} */}
+            {status === "authenticated" && (
+              <Profile user={session?.user ?? null} />
+            )}
+            {status === "unauthenticated" && (
+              <div className="flex-1">
+                <Link
+                  href="/"
+                  className="btn btn-ghost text-xl text-dark-brown"
+                >
+                  Login
+                </Link>
+              </div>
+            )}
+          </div>
+        </Flex>
       </nav>
       {/* </Container> */}
-      {/* Sidebar */}
+      {/* <Sidebar isExpanded={isSidebarExpanded} /> */}
       {/* <Sidebar isExpanded={isSidebarExpanded} /> */}
     </>
   );

@@ -1,14 +1,8 @@
-// import Layout from "./components/layout/Layout";
-// import Header from "./components/layout/header/Header";
-
 import prisma from "@/prisma/client";
-// import EventSummary from "./EventSummary";
+import { Metadata } from "next";
 import EventsCharts from "./EventsCharts";
-import { Flex, Grid } from "@radix-ui/themes";
 import EventSummary from "./EventSummary";
 import LatestEvents from "./LatestEvents";
-import { Metadata } from "next";
-// import LatestEvents from "./LatestEvents";
 
 export default async function Home() {
   const onGoing = await prisma.event.count({
@@ -26,16 +20,13 @@ export default async function Home() {
       status: "CANCELLED",
     },
   });
-  // return  <EventSummary onGoing={onGoing} ended={ended} cancelled={cancelled} />;
-  // return <EventsCharts onGoing={onGoing} ended={ended} cancelled={cancelled} />;
+
   return (
-    <Grid columns={{ initial: "1", md: "2" }} gap="4">
-      <Flex direction="column" gap="2">
-        <EventSummary onGoing={onGoing} ended={ended} cancelled={cancelled} />
-        <EventsCharts onGoing={onGoing} ended={ended} cancelled={cancelled} />
-      </Flex>
+    <div className="space-y-4">
+      <EventSummary onGoing={onGoing} ended={ended} cancelled={cancelled} />
+      <EventsCharts onGoing={onGoing} ended={ended} cancelled={cancelled} />
       <LatestEvents />
-    </Grid>
+    </div>
   );
 }
 

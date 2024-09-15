@@ -8,8 +8,7 @@ import Navbar from "./Navbar";
 import AuthProvider from "./auth/Provider";
 import QueryClientProvider from "./QueryClientProvider";
 import { auth } from "@/auth";
-import Footer from "./Footer";
-// import Sidebar from "./Sidebar"; // Import Sidebar component
+// import Footer from "./Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,9 +31,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
+  const getsession = async () => {
+    const session = await auth();
+    return session;
+  };
   let classLogin = "";
-  if (!session?.user) {
+  const session = await getsession();
+  if (session?.user === undefined) {
     console.log("session", session?.user);
     const arrClas = [
       "justify-center",
@@ -47,7 +50,6 @@ export default async function RootLayout({
     ];
     classLogin = arrClas.join(" ");
   }
-
   return (
     <html lang="en">
       <body
@@ -56,29 +58,13 @@ export default async function RootLayout({
         <QueryClientProvider>
           <AuthProvider>
             <Theme
-              className={`${classLogin} grid  min-h-screen grid-rows-[auto,auto] grid-cols-[auto_1fr]`}
+              className={`${classLogin} grid grid-cols-2 grid-rows-2 gap-4 min-h-screen`}
             >
-              {/* First child: Navbar, spans two columns */}
-              {session?.user && (
-                <div className="col-span-2">
-                  <Navbar />
-                </div>
-              )}
-
-              {/* Second child: Main content, first column of second row */}
-              <main className="col-start-2 row-start-2 p-4">
+              {session?.user && <Navbar />}
+              <main className="">
                 <Container>{children}</Container>
               </main>
-
-              {/* Third child: Sidebar, second column of second row */}
-              {
-                /* {session?.user && ( */
-                // <div className="col-start-1 row-start-2">
-                // <Sidebar />
-                // </div>
-                // )
-              }
-              <Footer />
+              {/* <Footer /> */}
             </Theme>
           </AuthProvider>
         </QueryClientProvider>

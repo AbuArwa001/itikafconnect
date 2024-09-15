@@ -2,12 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { MdEventAvailable } from "react-icons/md";
 import classnames from "classnames";
-
 interface SidebarProps {
-  isExpanded?: boolean; // Make isExpanded optional in case it's not controlled here
+  isExpanded: boolean;
 }
 
-function Sidebar({ isExpanded = true }: SidebarProps) {
+function Sidebar({ isExpanded }: SidebarProps) {
   const sideLinks = [
     {
       label: "Home",
@@ -55,30 +54,30 @@ function Sidebar({ isExpanded = true }: SidebarProps) {
       icon: <MdEventAvailable className="size-5" />,
     },
   ];
-
   return (
     <div
       className={classnames({
-        "top-0 left-0": true,
-        "h-full bg-gray-300 rounded-md transition-all duration-300 ease-in-out overflow-y-auto":
+        "h-screen fixed top-16 left-0 bg-gray-300 rounded-md transition-all duration-300 ease-in-out":
           true,
-        "w-64": isExpanded,
+        "w-32": isExpanded,
         "w-16": !isExpanded,
       })}
     >
-      <ul className="menu p-4">
-        {sideLinks.map((link, index) => (
-          <li key={index} className="mb-2">
-            <Link
-              href={link.href}
-              className="tooltip tooltip-right flex items-center space-x-2"
-              data-tip={!isExpanded ? link.label : undefined}
-            >
-              {link.icon}
-              {isExpanded && <span className="ml-2">{link.label}</span>}
-            </Link>
-          </li>
-        ))}
+      <ul className="menu">
+        {sideLinks.map((link, tabIndex) => {
+          return (
+            <li key={tabIndex}>
+              <Link
+                href={link.href}
+                className="tooltip tooltip-right flex items-center space-x-2"
+                data-tip={!isExpanded ? link.label : null}
+              >
+                {link.icon}
+                {isExpanded && <span className="ml-2">{link.label}</span>}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

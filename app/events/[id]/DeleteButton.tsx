@@ -1,10 +1,11 @@
 "use client";
 import { Spinner } from "@/app/components";
-import { AlertDialog, Button, Flex } from "@radix-ui/themes";
+import { AlertDialog, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
+import { MdDelete } from "react-icons/md";
+import { Button } from "@/components/ui/button";
 const DeleteButton = ({ eventId }: { eventId: number }) => {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
@@ -25,8 +26,13 @@ const DeleteButton = ({ eventId }: { eventId: number }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="red" disabled={isDeleting}>
+          <Button
+            className="bg-red-600 hover:bg-red-400 p-2"
+            color="red"
+            disabled={isDeleting}
+          >
             {isDeleting && <Spinner />}
+            <MdDelete className="m-2" />
             Delete Event
             {/* <Link href={`/events/${eventId}/delete`}>Delete Event</Link> */}
           </Button>
@@ -40,7 +46,7 @@ const DeleteButton = ({ eventId }: { eventId: number }) => {
           </AlertDialog.Description>
           <Flex mt="3" gap="3">
             <AlertDialog.Cancel>
-              <Button color="gray" variant="soft">
+              <Button color="gray" variant="ghost">
                 Cancel
               </Button>
             </AlertDialog.Cancel>
@@ -61,7 +67,7 @@ const DeleteButton = ({ eventId }: { eventId: number }) => {
             An error occurred while deleting the event
           </AlertDialog.Description>
           <AlertDialog.Action>
-            <Button color="red" mt="2" onClick={() => setError(false)}>
+            <Button color="red" onClick={() => setError(false)}>
               Close
             </Button>
           </AlertDialog.Action>
