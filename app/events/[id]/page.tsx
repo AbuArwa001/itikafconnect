@@ -10,6 +10,7 @@ import EventDetails from "./EventDetails";
 import { auth } from "@/auth";
 import RegisterEventButton from "./RegisterEventButton";
 import { EventStatusBadge } from "@/app/components";
+import ShowSubscribers from "./showSubscribers";
 interface props {
   params: {
     id: string;
@@ -49,6 +50,7 @@ const EventDetail = async ({ params: { id } }: props) => {
                 <DeleteButton eventId={event.id} />
               </>
             )}
+            <ShowSubscribers />
             <RegisterEventButton
               eventId={event.id}
               userId={session.user.id}

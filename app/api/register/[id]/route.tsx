@@ -38,34 +38,54 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json(body);
 }
-export async function PATCH(request: NextRequest) {
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  // Authenticate the session
   const session = await auth();
   if (!session) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
+  // Extract `id` from the URL path params
+  // Parse the request body
   const body = await request.json();
-  // const { status } = body;
-  // const eventValidation = EventSchema.safeParse(body);
-  // if (!eventValidation.success) {
-  //   return NextResponse.json(eventValidation.error.format(), { status: 400 });
-  // }
+  console.log("params", params);
+  const { id } = params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "Missing registration ID" },
+      { status: 400 }
+    );
+  }
+
   try {
+    // Update registration status using the parsed `id`
     const registration = await prisma.registration.update({
       where: {
-        id: Number(request.nextUrl.searchParams.get("id")),
+        id: Number(id), // Ensure `id` is properly converted to a number if necessary
       },
       data: {
-        status: body.status,
+        status: body.status, // Update the status field from the request body
       },
     });
+
+    // Return the updated registration data
     return NextResponse.json(registration, { status: 200 });
-    // res.status(200).json(registration);
   } catch (error) {
-    console.error(error);
+    console.error("Failed to update registration:", error);
     return NextResponse.json(
       { error: "Failed to Update Registration" },
       { status: 500 }
     );
   }
 }
+
+// export async function GET(request: NextRequest) {
+//   const { body } = request;
+
+//   return NextResponse.json(body);
+// }

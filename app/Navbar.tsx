@@ -44,7 +44,7 @@ function Navbar() {
         <Flex align="end">
           <div className="flex-1">
             <Link
-              href="/events/list"
+              href={`/users/${session?.user?.id}/events`}
               className="btn btn-ghost text-xl text-dark-brown"
             >
               MyEvents

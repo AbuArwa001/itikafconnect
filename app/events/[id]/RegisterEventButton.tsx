@@ -30,10 +30,9 @@ const RegisterEventButton = ({
       : false;
 
   const handleDelete = async () => {
-    console.log("Button clicked");
     try {
       setLoading(true);
-      const registered = axios.post(`/api/register`, {
+      await axios.post(`/api/register`, {
         userId,
         eventId,
       });
@@ -43,7 +42,6 @@ const RegisterEventButton = ({
           eventId,
         },
       });
-      console.log("registration", registered);
     } catch (error) {
       console.error(error);
     }
