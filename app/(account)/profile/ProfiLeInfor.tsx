@@ -61,7 +61,7 @@ const ProfiLeInfor = () => {
         data.fileName,
         currentUser?.email || "DefaultUser"
       );
-      console.log("NEW URL", process.env.NEXT_PUBLIC_DEFAULT_USER);
+      console.log("NEW URL DATa", data.fileName);
 
       // Update the user's profile picture URL in the database
       await updateUserProfilePictureInDB(
