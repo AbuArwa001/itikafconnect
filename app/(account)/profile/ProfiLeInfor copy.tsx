@@ -52,14 +52,12 @@ const ProfiLeInfor = () => {
 
   // Fetch profile picture from S3
   useEffect(() => {
-    const fetchProfileUrl = () => {
+    const fetchProfileUrl = async () => {
       if (currentUser) {
-        // const url = await getFileUrl(
-        //   "profile.jpg",
-        //   currentUser?.email || "DefaultUser"
-        // );
-        const url = currentUser?.profile_picture || "/profile.jpg";
-        console.log(currentUser);
+        const url = await getFileUrl(
+          "profile.jpg",
+          currentUser?.email || "DefaultUser"
+        );
         console.log(url);
         setProfileUrl(url); // Update state with the S3 URL
       }
@@ -68,30 +66,23 @@ const ProfiLeInfor = () => {
   }, [currentUser]);
 
   const handleProfileUpload = async (e) => {
-    e.preventDefault();
     const file = e.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("email", currentUser?.email || "DefaultUser");
-
-    try {
-      const res = await fetch("/api/awsS3", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) {
-        throw new Error(`Error: ${res.status} ${res.statusText}`);
-      }
-
-      const data = await res.json();
-      const newProfileUrl = await getFileUrl(
-        data.fileName,
+    if (file) {
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      // Upload the file to S3
+      // const plainFile = Object.assign({}, file);
+      await uploadFile(
+        buffer,
+        "profile1.jpg",
         currentUser?.email || "DefaultUser"
       );
-      console.log(newProfileUrl);
+
+      // Fetch the updated URL from S3
+      const newProfileUrl = await getFileUrl(
+        currentUser?.email || "DefaultUser",
+        "profile.jpg"
+      );
 
       // Update the user's profile picture URL in the database
       await updateUserProfilePictureInDB(
@@ -99,9 +90,8 @@ const ProfiLeInfor = () => {
         newProfileUrl
       );
 
-      setProfileUrl(newProfileUrl); // Update profile picture URL
-    } catch (error) {
-      console.error("Error uploading file:", error);
+      // Set the new profile picture URL
+      setProfileUrl(newProfileUrl);
     }
   };
 

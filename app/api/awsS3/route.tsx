@@ -9,13 +9,13 @@ const s3Client = new S3Client({
   },
 });
 
-async function uploadFileToS3(file: Buffer, fileName: string) {
+async function uploadFileToS3(file: Buffer, fileName: string, email: string) {
   const filBuffer = file;
   console.log(fileName);
 
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
-    Key: `${fileName}-${new Date().getTime()}`,
+    Key: `${email}/${fileName}`,
     Body: filBuffer,
     ContentType: "image/jpeg",
   };
@@ -27,12 +27,13 @@ export async function POST(req) {
   try {
     const formData = await req.formData();
     const file = formData.get("file");
+    const email = formData.get("file");
 
     if (!file) {
       return NextResponse.json({ error: "No file found" }, { status: 400 });
     }
     const buffer = Buffer.from(await file.arrayBuffer());
-    const fileName = await uploadFileToS3(buffer, file.name);
+    const fileName = await uploadFileToS3(buffer, file.name, email);
 
     // await s3Client.send(command);
     return NextResponse.json({ Success: true, fileName });

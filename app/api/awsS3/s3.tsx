@@ -1,21 +1,14 @@
 "use server";
 import prisma from "@/prisma/client";
-import {
-  S3Client,
-  PutObjectCommand,
-  GetObjectCommand,
-} from "@aws-sdk/client-s3";
+import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 // import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
 
-const REGION = "eu-north-1";
-const BUCKET_NAME = "itikafconnect";
-
 const s3Client = new S3Client({
-  region: REGION,
+  region: process.env.AWS_REGION || "us-east-1",
   credentials: {
-    accessKeyId: "AKIAUJRDVR7A7AZQ2Z4M",
-    secretAccessKey: "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",
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
   },
 });
 
@@ -50,7 +43,7 @@ const s3Client = new S3Client({
 
 export const getFileUrl = async (fileName: string, userName: string) => {
   const command = new GetObjectCommand({
-    Bucket: "itikafconnect",
+    Bucket: process.env.AWS_BUCKET_NAME,
     Key: `${userName}/${fileName}`,
   });
   return await getSignedUrl(s3Client, command, { expiresIn: 3600 });
