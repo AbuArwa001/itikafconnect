@@ -1,50 +1,13 @@
+// ProfiLeInfor.tsx
 "use client";
-import { getFileUrl } from "@/app/api/awsS3/s3";
+import { getFileUrl, getProfileUrl } from "@/app/api/awsS3/s3";
 import { Box, Button, Card, Flex, TextField } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { updateUserProfilePictureInDB } from "@/app/api/awsS3/s3";
+import defaultImg from "@/app/assets/images/defaultImage.png";
 
-// Example Prisma update function
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-
-// Example Prisma update function
-const s3Client = new S3Client({
-  region: process.env.AWS_REGION || "",
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-  },
-});
-export const uploadFile = async (
-  file: Buffer,
-  fileName: string,
-  userName: string
-) => {
-  const filBuffer = file;
-  try {
-    // Convert the file to a Blob
-    // const blob =
-    //   file instanceof Blob ? file : new Blob([file], { type: file.type });
-
-    // Create the S3 upload parameters
-    const params = {
-      Bucket: "eu-north-1",
-      Key: `${userName}/${fileName}`,
-      Body: filBuffer,
-      ContentType: "image/jpeg",
-    };
-
-    // Upload the file to S3
-    const command = new PutObjectCommand(params);
-    await s3Client.send(command);
-
-    console.log("File uploaded successfully");
-  } catch (error) {
-    console.error("Error uploading file:", error);
-  }
-};
 const ProfiLeInfor = () => {
   const currentUser = useSession().data?.user;
   const [profileUrl, setProfileUrl] = useState("");
@@ -52,24 +15,31 @@ const ProfiLeInfor = () => {
 
   // Fetch profile picture from S3
   useEffect(() => {
-    const fetchProfileUrl = () => {
+    const fetchProfileUrl = async () => {
       if (currentUser) {
-        // const url = await getFileUrl(
-        //   "profile.jpg",
-        //   currentUser?.email || "DefaultUser"
-        // );
-        const url = currentUser?.profile_picture || "/profile.jpg";
-        console.log(currentUser);
-        console.log(url);
-        setProfileUrl(url); // Update state with the S3 URL
+        try {
+          // Fetch the profile URL for the current user
+          const url = (await getProfileUrl(currentUser.id)) || "/profile.jpg";
+          // console.log(currentUser);
+          // console.log(url);
+          url
+            ? setProfileUrl(url)
+            : setProfileUrl(process.env.NEXT_PUBLIC_DEFAULT_USER || "");
+          setProfileUrl(url); // Update state with the S3 URL
+        } catch (error) {
+          console.error("Error fetching profile URL:", error);
+        }
       }
     };
+
     fetchProfileUrl();
   }, [currentUser]);
 
-  const handleProfileUpload = async (e) => {
+  const handleProfileUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     e.preventDefault();
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (!file) return;
 
     const formData = new FormData();
@@ -91,7 +61,7 @@ const ProfiLeInfor = () => {
         data.fileName,
         currentUser?.email || "DefaultUser"
       );
-      console.log(newProfileUrl);
+      console.log("NEW URL", process.env.NEXT_PUBLIC_DEFAULT_USER);
 
       // Update the user's profile picture URL in the database
       await updateUserProfilePictureInDB(
@@ -111,10 +81,11 @@ const ProfiLeInfor = () => {
       <Card className="p-4 border-2 bg-light_gold">
         <div>
           <Image
-            src={profileUrl}
+            src={profileUrl || defaultImg}
             alt="Profile Picture"
             height={300}
             width={300}
+            priority={true}
           />
           <input type="file" onChange={handleProfileUpload} />
         </div>

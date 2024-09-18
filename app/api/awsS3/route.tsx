@@ -1,11 +1,12 @@
+// routeModule.tsx
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const s3Client = new S3Client({
-  region: process.env.AWS_REGION,
+  region: process.env.NEXT_PUBLIC_AWS_REGION || "",
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
+    accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID || "",
+    secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY || "",
   },
 });
 
@@ -14,7 +15,7 @@ async function uploadFileToS3(file: Buffer, fileName: string, email: string) {
   console.log(fileName);
 
   const params = {
-    Bucket: process.env.AWS_BUCKET_NAME,
+    Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
     Key: `${email}/${fileName}`,
     Body: filBuffer,
     ContentType: "image/jpeg",
@@ -23,17 +24,21 @@ async function uploadFileToS3(file: Buffer, fileName: string, email: string) {
   await s3Client.send(command);
   return fileName;
 }
-export async function POST(req) {
+export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const file = formData.get("file");
-    const email = formData.get("file");
+    const email = formData.get("email");
+    console.log("EMAIL", email);
 
     if (!file) {
       return NextResponse.json({ error: "No file found" }, { status: 400 });
     }
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const fileName = await uploadFileToS3(buffer, file.name, email);
+    const buffer = Buffer.from(await (file as Blob).arrayBuffer());
+    if (typeof email !== "string") {
+      return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+    }
+    const fileName = await uploadFileToS3(buffer, (file as File).name, email);
 
     // await s3Client.send(command);
     return NextResponse.json({ Success: true, fileName });

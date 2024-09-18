@@ -1,10 +1,29 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
-import { uploadFile, getFileUrl } from "@/app/api/awsS3/s3";
+import {
+  getFileUrl,
+  getUrl,
+  updateUserIdBackInDB,
+  updateUserIdFrontInDB,
+} from "@/app/api/awsS3/s3";
 import Image from "next/image";
 import { Box, Card, Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
+import { UserRole } from "@prisma/client";
+interface UserWithoutSession {
+  id: string;
+  name: string | null;
+  email: string | null;
+  password: string | null;
+  emailVerified: Date | null;
+  image: string | null;
+  phone: string | null;
+  address: string | null;
+  id_front?: string | null; // Assuming these are the fields you're working with
+  id_back?: string | null;
+  role: UserRole;
+}
 
 const Attachments = () => {
   const currentUser = useSession().data?.user;
@@ -14,16 +33,13 @@ const Attachments = () => {
 
   useEffect(() => {
     const fetchAttachmentUrls = async () => {
-      const frontUrl = await getFileUrl(
-        currentUser?.email || "DefaultUser",
-        "id_front.jpg"
+      const url: UserWithoutSession | null = await getUrl(
+        currentUser?.id || ""
       );
-      const backUrl = await getFileUrl(
-        currentUser?.email || "DefaultUser",
-        "id_back.jpg"
-      );
-      setIdFrontUrl(frontUrl); // Update state with the S3 URL
-      setIdBackUrl(backUrl);
+      const frontUrl = url?.id_front || "";
+      frontUrl ? setIdFrontUrl(frontUrl) : setIdFrontUrl("");
+      const backUrl = url?.id_back || "";
+      backUrl ? setIdBackUrl(backUrl) : setIdBackUrl("");
     };
 
     if (currentUser) {
@@ -31,10 +47,42 @@ const Attachments = () => {
     }
   }, [currentUser]);
 
-  const handleAttachmentUpload = async (e, fileName: string) => {
+  const handleAttachmentUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    fileName: string
+  ) => {
+    e.preventDefault();
     const file = e.target.files ? e.target.files[0] : null;
-    await uploadFile(file, fileName, currentUser?.email || "DefaultUser");
-    const url = await getFileUrl(fileName, "id_back.jpg");
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append(
+      "email",
+      `${currentUser?.email}/${fileName}` || "DefaultUser"
+    );
+    try {
+      const res = await fetch("/api/awsS3", {
+        method: "POST",
+        body: formData,
+      });
+      if (!res.ok) {
+        throw new Error(`Error: ${res.status} ${res.statusText}`);
+      }
+      const newProfileUrl = await getFileUrl(
+        `${currentUser?.email}/${fileName}`,
+        currentUser?.email || "DefaultUser"
+      );
+      if (fileName === "id_front") {
+        await updateUserIdFrontInDB(currentUser?.email || "", newProfileUrl);
+      } else {
+        await updateUserIdBackInDB(currentUser?.email || "r", newProfileUrl);
+      }
+    } catch (error) {
+      console.error("Error uploading attachment:", error);
+    }
+
+    // await uploadFile(file, fileName, currentUser?.email || "DefaultUser");
+    const url = await getFileUrl(fileName, currentUser?.email || "DefaultUser");
     fileName === "id_front.jpg" ? setIdFrontUrl(url) : setIdBackUrl(url);
   };
 
@@ -45,13 +93,14 @@ const Attachments = () => {
         <Box>
           <label>ID Front</label>
           {idFrontUrl ? (
+            // <></>
             <Image src={idFrontUrl} alt="ID Front" height={100} width={100} />
           ) : (
             <div className="border-2 border-dashed h-[150px] w-[200px] flex items-center justify-center relative">
               <span className="text-sm text-gray-500">Upload</span>
               <input
                 type="file"
-                onChange={(e) => handleAttachmentUpload(e, "id_front.jpg")}
+                onChange={(e) => handleAttachmentUpload(e, "id_front")}
                 className="absolute opacity-0 w-full h-full cursor-pointer"
                 accept="image/*"
               />
@@ -62,13 +111,14 @@ const Attachments = () => {
         <Box>
           <label>ID Back</label>
           {idBackUrl ? (
+            // <></>
             <Image src={idBackUrl} alt="ID Back" height={150} width={200} />
           ) : (
             <div className="border-2 border-dashed h-[150px] w-[200px] flex items-center justify-center relative">
               <span className="text-sm text-gray-500">Upload</span>
               <input
                 type="file"
-                onChange={(e) => handleAttachmentUpload(e, "id_back.jpg")}
+                onChange={(e) => handleAttachmentUpload(e, "id_back")}
                 className="absolute opacity-0 w-full h-full cursor-pointer"
                 accept="image/*"
               />

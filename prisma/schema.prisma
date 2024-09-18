@@ -117,6 +117,10 @@ model User {
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
   profile_picture String?        @db.VarChar(512)
+  id_back         String?        @db.VarChar(512)
+  id_front        String?        @db.VarChar(512)
+  next_of_kin     String?        @db.VarChar(512)
+  next_of_kin_no  String?        @db.VarChar(20)
   // roleId        Int
   // role          Role           @default(USER) @relation(fields: [roleId], references: [id])
   role            UserRole       @default(USER)

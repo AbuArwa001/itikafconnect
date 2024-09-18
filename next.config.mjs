@@ -17,6 +17,11 @@ const nextConfig = {
         hostname: "itikafconnect.s3.eu-north-1.amazonaws.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "itikafconnect.s3.us-east-1.amazonaws.com",
+        port: "",
+      },
     ],
   },
 };
