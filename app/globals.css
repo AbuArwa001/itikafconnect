@@ -109,3 +109,70 @@ footer {
     @apply bg-background text-foreground;
   }
 }
+
+/* Style for the entire profile card when printing */
+.printable-card {
+  width: 100%;
+  padding: 20px;
+  background-color: white !important;
+  /* Ensure background is white for printing */
+}
+
+/* Ensure the card doesn't resize or distort during print */
+.profile-card {
+  max-width: 900px;
+  /* Adjust this based on your card size */
+  margin: auto;
+  /* Center the card on the print page */
+}
+
+/* Flex fixes for print */
+@media print {
+
+  /* Hide the print button */
+  button {
+    display: none;
+  }
+
+  /* Ensure that the card prints in full width */
+  .profile-card {
+    width: 100%;
+    border: none;
+    background-color: white;
+    /* Ensure background stays white */
+  }
+
+  /* Adjust text and layout to print nicely */
+  h1, label {
+    font-size: 18px;
+    color: black !important;
+    /* Ensure readable text colors */
+  }
+
+  .printable-card {
+    page-break-inside: avoid;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Set fixed image dimensions to avoid distortions */
+  img {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    max-height: 500px;
+  }
+
+  /* Ensure form fields align well */
+  .form-control {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* Ensure Flex layout doesn't break during print */
+  .profile-card>.radix-ui-flex {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

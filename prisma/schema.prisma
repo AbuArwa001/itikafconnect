@@ -106,22 +106,23 @@ enum RegistrationStatus {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  name          String?
-  email         String?        @unique
-  password      String?
-  emailVerified DateTime?      @map("email_verified")
-  image         String?
-  phone         String?        @db.VarChar(20)
-  address       String?        @db.Text
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id              String         @id @default(cuid())
+  name            String?
+  email           String?        @unique
+  password        String?
+  emailVerified   DateTime?      @map("email_verified")
+  image           String?
+  phone           String?        @db.VarChar(20)
+  address         String?        @db.Text
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  profile_picture String?        @db.VarChar(512)
   // roleId        Int
   // role          Role           @default(USER) @relation(fields: [roleId], references: [id])
-  role          UserRole       @default(USER)
-  accounts      Account[]
-  sessions      Session[]
-  registrations Registration[]
+  role            UserRole       @default(USER)
+  accounts        Account[]
+  sessions        Session[]
+  registrations   Registration[]
 
   @@map("users")
 }
