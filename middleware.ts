@@ -15,29 +15,32 @@ import {
 const { auth } = NextAuth(authConfig);
 
 export default auth((req): Response | void => {
-  // const { nextUrl } = req;
-  // const isLoggedIn = !!req.auth;
-  // const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  // const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-  // const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  // // If it's an API auth route, we let the request pass
-  // if (isApiAuthRoute) {
-  //   return;
-  // }
-  // // If the route is an auth route and user is logged in, redirect them to dashboard
-  // if (isAuthRoute) {
-  //   if (isLoggedIn) {
-  //     return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-  //   }
-  //   return;
-  // }
-  // // If the user is not logged in and it's not a public route, redirect to login page
-  // if (!isLoggedIn && !isPublicRoute) {
-  //   console.log("redirecting to login");
-  //   return Response.redirect(new URL("/auth/login", nextUrl));
-  // }
-  // // Otherwise, allow the request to proceed
-  // return;
+  const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
+
+  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  // If it's an API auth route, we let the request pass
+  if (isApiAuthRoute) {
+    return;
+  }
+
+  // If the route is an auth route and user is logged in, redirect them to dashboard
+  if (isAuthRoute) {
+    if (isLoggedIn) {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+    return;
+  }
+  // If the user is not logged in and it's not a public route, redirect to login page
+  if (!isLoggedIn && !isPublicRoute) {
+    console.log("redirecting to login");
+    return Response.redirect(new URL("/auth/login", nextUrl));
+  }
+
+  // Otherwise, allow the request to proceed
+  return;
 });
 
 export const config = {

@@ -121,6 +121,7 @@ model User {
   id_front        String?        @db.VarChar(512)
   next_of_kin     String?        @db.VarChar(512)
   next_of_kin_no  String?        @db.VarChar(20)
+  id_passport     String?        @db.VarChar(512)
   // roleId        Int
   // role          Role           @default(USER) @relation(fields: [roleId], references: [id])
   role            UserRole       @default(USER)

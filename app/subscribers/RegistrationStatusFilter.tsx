@@ -23,7 +23,7 @@ const RegistrationStatusFilter = () => {
         if (searchparams.get("orderBy"))
           params.append("orderBy", searchparams.get("orderBy")!);
         const filter = params.size ? "?" + params.toString() : "";
-        router.push(`/events/list/${filter}`);
+        router.push(`/subscribers/${filter}`);
       }}
     >
       <Select.Trigger placeholder="Filter by Status.." />

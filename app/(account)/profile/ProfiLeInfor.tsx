@@ -7,10 +7,13 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { updateUserProfilePictureInDB } from "@/app/api/awsS3/s3";
 import defaultImg from "@/app/assets/images/defaultImage.png";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const ProfiLeInfor = () => {
   const currentUser = useSession().data?.user;
   const [profileUrl, setProfileUrl] = useState("");
+  const router = useRouter();
   // const [newProfile, setNewProfile] = useState(null);
 
   // Fetch profile picture from S3
@@ -35,6 +38,28 @@ const ProfiLeInfor = () => {
     fetchProfileUrl();
   }, [currentUser]);
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await axios.patch(`/api/users/${currentUser?.id}`, {
+        name: `${data.firstName} ${data.lastName}`,
+        email: currentUser?.email,
+        phone: data.phone,
+        address: data.address,
+        id_passport: data.id_passport,
+      });
+
+      if (res.status === 200) {
+        router.refresh(); // Refresh the page after updating
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
   const handleProfileUpload = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -85,36 +110,31 @@ const ProfiLeInfor = () => {
             alt="Profile Picture"
             height={300}
             width={300}
-            priority={true}
+            priority
           />
           <input type="file" onChange={handleProfileUpload} />
         </div>
-        {/* <Image
-          src={profile}
-          height={300}
-          width={300}
-          alt="Profile Picture"
-          className="rounded-md"
-        /> */}
       </Card>
 
       {/* Profile Information Form */}
       <Card className="p-4 w-[60%]">
         <h1 className="text-2xl font-bold">Profile Information</h1>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <Flex gap="6">
             <Box className="w-1/2">
               <label>First Name</label>
               <TextField.Root
                 radius="large"
                 defaultValue={currentUser?.name?.split(" ")[0]}
+                name="firstName"
               />
             </Box>
             <Box className="w-1/2">
               <label>Last Name</label>
               <TextField.Root
                 radius="large"
-                defaultValue={currentUser?.name?.split(" ")[2]}
+                defaultValue={currentUser?.name?.split(" ")[1]}
+                name="lastName"
               />
             </Box>
           </Flex>
@@ -124,8 +144,9 @@ const ProfiLeInfor = () => {
               <label>Email</label>
               <TextField.Root
                 radius="large"
-                disabled={true}
+                disabled
                 defaultValue={currentUser?.email || "N/A"}
+                name="email"
               />
             </Box>
             <Box className="w-1/2">
@@ -133,6 +154,7 @@ const ProfiLeInfor = () => {
               <TextField.Root
                 radius="large"
                 defaultValue={currentUser?.phone || "N/A"}
+                name="phone"
               />
             </Box>
           </Flex>
@@ -142,7 +164,8 @@ const ProfiLeInfor = () => {
               <label>ID/Passport No.</label>
               <TextField.Root
                 radius="large"
-                defaultValue={currentUser?.phone || "N/A"}
+                defaultValue={currentUser?.id_passport || "N/A"}
+                name="id_passport"
               />
             </Box>
             <Box className="w-1/2">
@@ -150,11 +173,12 @@ const ProfiLeInfor = () => {
               <TextField.Root
                 radius="large"
                 defaultValue={currentUser?.address || "N/A"}
+                name="address"
               />
             </Box>
           </Flex>
 
-          <Button color="orange" className="w-full">
+          <Button color="orange" className="w-full" type="submit">
             Edit Profile
           </Button>
         </form>
@@ -162,5 +186,4 @@ const ProfiLeInfor = () => {
     </Flex>
   );
 };
-
 export default ProfiLeInfor;
