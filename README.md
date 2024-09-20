@@ -276,6 +276,42 @@ npm run dev
 | GET    | /api/users/profile       | Fetch the current user's profile   |
 | POST   | /api/users/profile       | Update user profile                |
 
+## 🛠️ Software Architecture
+
+This project follows a **3-tier architecture**:
+
+1. **Presentation Layer** (Frontend): Built using Next.js and React. This layer is responsible for handling the user interface, including registration, authentication, and user profile management.
+   
+2. **Business Logic Layer** (API): The API layer is developed using Node.js and Express. It processes incoming HTTP requests and handles application logic for user registration, login, events, and profile management.
+
+3. **Data Layer** (Database): The database is managed using Prisma ORM with a MySql database. Prisma serves as the bridge between the API and the database, offering type-safe database interactions.
+
+## 🗄️ Database
+
+The database for the I'tikafConnect project is built on **MySQL**. It consists of tables for managing events, users, profiles, and other data required by the system.
+
+Key tables include:
+
+- **Users**: Stores user information, including authentication details.
+- **Events**: Stores I'tikaf event details.
+- **Profiles**: Stores user profile details, including next of kin information and attachments.
+
+The schema is managed using **Prisma**, an ORM that makes database migrations, queries, and schema management easy by integrating directly with our codebase.
+
+## 🏗️ Prisma ORM
+
+We are using **Prisma ORM** to interact with the MySql database. Prisma allows us to write queries in a type-safe manner, ensuring that we catch errors at compile-time rather than runtime. 
+
+With Prisma, we get the following benefits:
+- **Type-safety**: Queries are strongly typed, so we catch schema-related errors early.
+- **Database migrations**: Prisma allows for easy database migrations to ensure the schema is up-to-date.
+- **Auto-generated queries**: Common database operations such as `create`, `update`, and `delete` are auto-generated, saving us time and reducing human error.
+
+To manage the database schema and migrations, run:
+```bash
+npx prisma migrate dev --name migration_name
+```
+
 ## 🧑‍💻 Contributing
 
 We welcome contributions to improve I'tikafConnect! To contribute:
