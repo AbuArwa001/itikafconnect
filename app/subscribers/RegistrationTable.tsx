@@ -1,13 +1,13 @@
 "use client";
+import { ExtendedUser } from "@/next-auth";
 import { Registration, RegistrationStatus, User } from "@prisma/client";
 import { ArrowUpIcon } from "@radix-ui/react-icons";
 import { Button, Table } from "@radix-ui/themes";
-import { default as Link, default as NextLink } from "next/link";
-import RegistrationStatusBadge from "../components/RegistrationStatusBadge";
-import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
+import { default as Link, default as NextLink } from "next/link";
 import { useRouter } from "next/navigation";
-import { ExtendedUser } from "@/next-auth";
+import { useEffect, useState } from "react";
+import RegistrationStatusBadge from "../components/RegistrationStatusBadge";
 
 export interface regQuery {
   status: RegistrationStatus;
@@ -31,6 +31,7 @@ const RegistrationTable = ({ searchParams, reg, currentUser }: Props) => {
   const [records, setRecords] = useState<RegistrationWithUser[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  // const currentUser = useSession().data?.user;
 
   // Fetch user data when the component mounts
   useEffect(() => {
@@ -122,7 +123,9 @@ const RegistrationTable = ({ searchParams, reg, currentUser }: Props) => {
           <Table.Row key={`${record.id}-${index}`}>
             <Table.Cell>
               {record.user ? (
-                <Link href={`/events/${record.id}`}>{record.user.name}</Link>
+                <Link href={`/profile/${record.user.id}`}>
+                  {record.user.name}
+                </Link>
               ) : (
                 <span>Unknown User</span>
               )}

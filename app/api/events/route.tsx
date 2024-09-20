@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  const { body } = request;
+  const body = request.json();
 
   return NextResponse.json(body);
 }

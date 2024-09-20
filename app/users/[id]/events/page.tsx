@@ -1,9 +1,6 @@
 import Pagination from "@/app/components/Pagination";
-import EventActions from "@/app/events/list/EventActions";
-import EventsTable, {
-  columnNames,
-  eventQuery,
-} from "@/app/events/list/EventsTable";
+import EventActions from "./EventActions";
+import EventsTable, { columnNames, eventQuery } from "./EventsTable";
 import { auth } from "@/auth";
 import prisma from "@/prisma/client";
 import { EventStatus } from "@prisma/client";
