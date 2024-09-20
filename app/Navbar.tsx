@@ -8,6 +8,7 @@ import Profile from "./Profile";
 import { Flex } from "@radix-ui/themes";
 
 function Navbar() {
+  const user = useSession().data?.user;
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const toggleSidebar = () => {
     setIsSidebarExpanded(!isSidebarExpanded);
@@ -68,10 +69,8 @@ function Navbar() {
                 <Skeleton width="3rem" height="3rem" />
               ) && <Skeleton width="3rem" />}
             {/* {status === "authenticated" && <NavItem />} */}
-            {status === "authenticated" && (
-              <Profile user={session?.user ?? null} />
-            )}
-            {status === "unauthenticated" && (
+            {user && <Profile user={session?.user ?? null} />}
+            {!user && (
               <div className="flex-1">
                 <Link
                   href="/"

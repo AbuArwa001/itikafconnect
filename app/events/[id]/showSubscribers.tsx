@@ -6,7 +6,10 @@ import { useState } from "react";
 import delay from "delay";
 import Link from "next/link";
 
-const ShowSubscribers = () => {
+// interface Props {
+//   params: { eventId: number };
+// }
+const ShowSubscribers = ({ eventId }: { eventId: number }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const showList = async () => {
     setLoading(true);
@@ -18,7 +21,7 @@ const ShowSubscribers = () => {
   return (
     <Button disabled={loading} onClick={showList}>
       <FaTableList className="m-2" />
-      <Link href="/subscribers">
+      <Link href={`/subscribers/${eventId}`}>
         Show All Subscribers
         {/* {loading && <Spinner />} */}
       </Link>

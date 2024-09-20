@@ -50,7 +50,7 @@ const EventDetail = async ({ params: { id } }: props) => {
                 <DeleteButton eventId={event.id} />
               </>
             )}
-            <ShowSubscribers />
+            <ShowSubscribers eventId={event.id} />
             <RegisterEventButton
               eventId={event.id}
               userId={session.user.id}

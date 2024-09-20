@@ -5,9 +5,9 @@ import { ArrowUpIcon } from "@radix-ui/react-icons";
 import { Button, Table } from "@radix-ui/themes";
 import axios, { AxiosResponse } from "axios";
 import { default as Link, default as NextLink } from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import RegistrationStatusBadge from "../components/RegistrationStatusBadge";
+import RegistrationStatusBadge from "../../components/RegistrationStatusBadge";
 
 export interface regQuery {
   status: RegistrationStatus;
@@ -28,16 +28,20 @@ interface RegistrationWithUser extends Registration {
 }
 
 const RegistrationTable = ({ searchParams, reg, currentUser }: Props) => {
+  const router = useRouter();
+  const { eventid: eventId } = useParams();
   const [records, setRecords] = useState<RegistrationWithUser[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
   // const currentUser = useSession().data?.user;
 
   // Fetch user data when the component mounts
   useEffect(() => {
     const fetchUserData = async () => {
+      const filteredReg = reg.filter(
+        (record) => record.eventId === Number(eventId)
+      );
       const results = await Promise.all(
-        reg.map(async (record) => {
+        filteredReg.map(async (record) => {
           try {
             const response: AxiosResponse<User> = await axios.get(
               `/api/users/${record.userId}`
@@ -92,9 +96,9 @@ const RegistrationTable = ({ searchParams, reg, currentUser }: Props) => {
     <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
-          {columns.map((column) => (
+          {columns.map((column, index) => (
             <Table.ColumnHeaderCell
-              key={column.value}
+              key={`${column.value}-${index}`}
               className={column.className}
             >
               <NextLink
