@@ -38,39 +38,7 @@ I'tikafConnect is an online platform for managing I'tikaf registrations and even
 
 ---
 
-## 🗂 Project Structure
 
-```bash
-.
-├── backend
-│   ├── app.py         # Python backend API
-│   ├── models.py      # Database models for handling user and event data
-│   ├── routes.py      # API endpoints for users and events
-│   └── auth.py        # Handles user authentication and sessions
-├── frontend
-│   ├── src
-│   │   ├── components # Reusable UI components
-│   │   ├── pages      # Application pages (Login, Signup, Profile)
-│   │   ├── utils      # Utility functions (e.g., API calls, form validation)
-│   │   └── styles     # Tailwind CSS configurations and global styles
-├── prisma
-│   ├── schema.prisma  # Prisma schema for database tables
-├── public             # Static assets (images, icons)
-├── .env               # Environment variables (e.g., API keys, DB URLs)
-├── README.md          # Project documentation
-└── package.json       # Dependencies and scripts for project management
-
-
-
-## Getting Started
-
-Here's a sample README.md for your project, assuming it's related to an I'tikaf registration system. You can modify the details as needed:
-
-md
-Copy code
-# I'tikaf Registration System
-
-This project is an online application for managing I'tikaf registrations and events at a mosque. The system is built using a modern tech stack, providing an easy way for users to sign up for I'tikaf and for admins to manage registrations.
 
 ## Tech Stack
 
@@ -90,7 +58,7 @@ This project is an online application for managing I'tikaf registrations and eve
 - **Image Thumbnails**: Automatically generate and display image thumbnails using Bull queues.
 - **AWS S3 Integration**: Attach and manage user profile pictures and documents in an S3 bucket.
 
-## Project Structure and Architecture
+## 🗂 Project Structure
 ```bash
 .
 ├── Actions
