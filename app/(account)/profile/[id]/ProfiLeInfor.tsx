@@ -6,10 +6,11 @@ import { Box, Button, Card, Flex, TextField } from "@radix-ui/themes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { updateUserProfilePictureInDB } from "@/app/api/awsS3/s3";
-import defaultImg from "@/app/assets/images/defaultImage.png";
+import defaultImg from "@/app/assets/images/Default.jpg";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
+import { Skeleton } from "@/app/components";
 
 export interface ProfiLeInforProps {
   user: User | null;
@@ -19,7 +20,8 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
   const currentUser = user;
   const [profileUrl, setProfileUrl] = useState("");
   const router = useRouter();
-
+  const isLoading = !user;
+  console.log(currentUser);
   // Fetch profile picture from S3
   useEffect(() => {
     const fetchProfileUrl = async () => {
@@ -108,7 +110,11 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
             width={300}
             priority
           />
-          <input type="file" onChange={handleProfileUpload} />
+          {isLoading ? (
+            <Skeleton />
+          ) : (
+            <input type="file" onChange={handleProfileUpload} />
+          )}
         </div>
       </Card>
 
@@ -118,58 +124,82 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
           <Flex gap="6">
             <Box className="w-1/2">
               <label>First Name</label>
-              <TextField.Root
-                radius="large"
-                defaultValue={currentUser?.name?.split(" ")[0]}
-                name="firstName"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  defaultValue={currentUser?.name?.split(" ")[0]}
+                  name="firstName"
+                />
+              )}
             </Box>
             <Box className="w-1/2">
               <label>Last Name</label>
-              <TextField.Root
-                radius="large"
-                defaultValue={currentUser?.name?.split(" ")[1]}
-                name="lastName"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  defaultValue={currentUser?.name?.split(" ")[1]}
+                  name="lastName"
+                />
+              )}
             </Box>
           </Flex>
 
           <Flex gap="6">
             <Box className="w-1/2">
               <label>Email</label>
-              <TextField.Root
-                radius="large"
-                disabled
-                defaultValue={currentUser?.email || "N/A"}
-                name="email"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  disabled
+                  defaultValue={currentUser?.email || "N/A"}
+                  name="email"
+                />
+              )}
             </Box>
             <Box className="w-1/2">
               <label>Phone</label>
-              <TextField.Root
-                radius="large"
-                defaultValue={currentUser?.phone || "N/A"}
-                name="phone"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  defaultValue={currentUser?.phone || "N/A"}
+                  name="phone"
+                />
+              )}
             </Box>
           </Flex>
 
           <Flex gap="6">
             <Box className="w-1/2">
               <label>ID/Passport No.</label>
-              <TextField.Root
-                radius="large"
-                defaultValue={currentUser?.id_passport || "N/A"}
-                name="id_passport"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  defaultValue={currentUser?.id_passport || "N/A"}
+                  name="id_passport"
+                />
+              )}
             </Box>
             <Box className="w-1/2">
               <label>Physical Address</label>
-              <TextField.Root
-                radius="large"
-                defaultValue={currentUser?.address || "N/A"}
-                name="address"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  defaultValue={currentUser?.address || "N/A"}
+                  name="address"
+                />
+              )}
             </Box>
           </Flex>
 
