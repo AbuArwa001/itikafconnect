@@ -28,6 +28,7 @@ export const login = async (data: LoginFormValues) => {
     }
     throw error;
   }
+  return { success: "Login successful" };
 };
 // export const login = async (email: string, password: string) => {
 //   const response = await fetch("/api/auth/login", {

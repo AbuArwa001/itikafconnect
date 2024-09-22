@@ -39,7 +39,7 @@ export const LoginForm = () => {
     setIsPending(() => {
       login(data).then((value) => {
         setError(value?.error);
-        setSuccess(value?.error);
+        setSuccess(value?.success);
       });
     });
   };

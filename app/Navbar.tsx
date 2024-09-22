@@ -8,13 +8,14 @@ import { Flex } from "@radix-ui/themes";
 import Profile from "./Profile";
 
 function Navbar() {
-  const user = useSession().data?.user;
+  // const user = useSession().data?.user;
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   // const [isLoading, setIsLoading] = useState(true);
   const toggleSidebar = () => {
     setIsSidebarExpanded(!isSidebarExpanded);
   };
   const { status, data: session } = useSession();
+  const isLoading = !session?.user;
 
   // useEffect(() => {});
   return (
@@ -67,12 +68,11 @@ function Navbar() {
             </Link>
           </div> */}
           <div className="flex-none">
-            {status === "loading" && (
+            {status === "loading" ? (
               <Skeleton width="3rem" height="3rem" className="rounded-md" />
-            )}
-            {/* {status === "authenticated" && <NavItem />} */}
-            {user && <Profile user={session?.user ?? null} />}
-            {status === "unauthenticated" && (
+            ) : status === "authenticated" ? (
+              <Profile user={session?.user ?? null} />
+            ) : (
               // <div className="flex-1 ">
               //  </div>
               <Link href="/" className="btn btn-ghost text-xl text-dark-brown">

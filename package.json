@@ -50,6 +50,7 @@
     "react-to-print": "^2.15.1",
     "reactstrap": "^9.2.2",
     "recharts": "^2.8.0",
+    "resend": "^4.0.0",
     "shadcn": "^2.0.6",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",

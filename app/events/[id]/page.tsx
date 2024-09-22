@@ -48,9 +48,9 @@ const EventDetail = async ({ params: { id } }: props) => {
               <>
                 <EditButton eventId={event.id} />
                 <DeleteButton eventId={event.id} />
+                <ShowSubscribers eventId={event.id} />
               </>
             )}
-            <ShowSubscribers eventId={event.id} />
             <RegisterEventButton
               eventId={event.id}
               userId={session.user.id}
