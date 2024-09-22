@@ -61,11 +61,11 @@ function Navbar() {
               Events
             </Link>
           </div>
-          <div className="flex-1">
+          {/* <div className="flex-1">
             <Link href="/" className="btn btn-ghost text-xl text-dark-brown">
               Calendar
             </Link>
-          </div>
+          </div> */}
           <div className="flex-none">
             {status === "loading" && (
               <Skeleton width="3rem" height="3rem" className="rounded-md" />
