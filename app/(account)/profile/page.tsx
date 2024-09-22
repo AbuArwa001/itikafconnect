@@ -1,14 +1,38 @@
 "use client";
 import { Card, Flex, Button } from "@radix-ui/themes";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ProfiLeInfor from "./ProfiLeInfor";
 import NextOfKeen from "./NextOfKeen";
 import Attachments from "./Attachments";
 import { useReactToPrint } from "react-to-print";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import { User } from "@prisma/client";
 
 const Account = () => {
   const componentRef = useRef(null);
+  const userId = useSession().data?.user.id;
+  const [user, setUser] = useState<User | null>(null);
 
+  useEffect(() => {
+    async function fetchUserData(id: string) {
+      try {
+        const res = await axios.get(`/api/users/${id}`);
+        const fetchedUser = res.data as User;
+        if (fetchedUser) {
+          setUser(fetchedUser);
+        } else {
+          console.error("User not found");
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    }
+
+    if (userId) {
+      fetchUserData(userId);
+    }
+  }, [userId]);
   // Print function
   const handlePrint = useReactToPrint({
     content: () => componentRef.current, // Target the content to print
@@ -28,10 +52,10 @@ const Account = () => {
             </div>
 
             {/* Profile Information */}
-            <ProfiLeInfor />
+            <ProfiLeInfor user={user} />
 
             {/* Next of Kin */}
-            <NextOfKeen />
+            <NextOfKeen user={user} />
 
             {/* Attachments */}
             <Attachments />

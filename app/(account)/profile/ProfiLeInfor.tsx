@@ -1,18 +1,28 @@
 // ProfiLeInfor.tsx
 "use client";
-import { getFileUrl, getProfileUrl } from "@/app/api/awsS3/s3";
+import {
+  getFileUrl,
+  getProfileUrl,
+  updateUserProfilePictureInDB,
+} from "@/app/api/awsS3/s3";
+import defaultImg from "@/app/assets/images/Default.jpg";
+import { Skeleton } from "@/app/components";
+import { User } from "@prisma/client";
 import { Box, Button, Card, Flex, TextField } from "@radix-ui/themes";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { updateUserProfilePictureInDB } from "@/app/api/awsS3/s3";
-import defaultImg from "@/app/assets/images/defaultImage.png";
 import axios from "axios";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const ProfiLeInfor = () => {
-  const currentUser = useSession().data?.user;
+export interface ProfiLeInforProps {
+  user: User | null;
+}
+
+const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
+  // const userId = useSession().data?.user.id;
+  const currentUser = user;
   const [profileUrl, setProfileUrl] = useState("");
+  const isLoading = !currentUser;
   const router = useRouter();
   // const [newProfile, setNewProfile] = useState(null);
 
@@ -105,14 +115,23 @@ const ProfiLeInfor = () => {
       {/* Profile Picture */}
       <Card className="p-4 border-2 bg-light_gold">
         <div>
-          <Image
-            src={profileUrl || defaultImg}
-            alt="Profile Picture"
-            height={300}
-            width={300}
-            priority
-          />
-          <input type="file" onChange={handleProfileUpload} />
+          {isLoading ? (
+            <Skeleton height="18rem" width="18rem" />
+          ) : (
+            <Image
+              src={profileUrl || defaultImg}
+              alt="Profile Picture"
+              height={300}
+              width={300}
+              priority
+            />
+          )}
+          {isLoading ? (
+            <Skeleton />
+          ) : (
+            <input type="file" onChange={handleProfileUpload} />
+          )}
+          {/* <input type="file" onChange={handleProfileUpload} /> */}
         </div>
       </Card>
 
@@ -123,58 +142,82 @@ const ProfiLeInfor = () => {
           <Flex gap="6">
             <Box className="w-1/2">
               <label>First Name</label>
-              <TextField.Root
-                radius="large"
-                defaultValue={currentUser?.name?.split(" ")[0]}
-                name="firstName"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  defaultValue={currentUser?.name?.split(" ")[0]}
+                  name="firstName"
+                />
+              )}
             </Box>
             <Box className="w-1/2">
               <label>Last Name</label>
-              <TextField.Root
-                radius="large"
-                defaultValue={currentUser?.name?.split(" ")[1]}
-                name="lastName"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  defaultValue={currentUser?.name?.split(" ")[1]}
+                  name="lastName"
+                />
+              )}
             </Box>
           </Flex>
 
           <Flex gap="6">
             <Box className="w-1/2">
               <label>Email</label>
-              <TextField.Root
-                radius="large"
-                disabled
-                defaultValue={currentUser?.email || "N/A"}
-                name="email"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  disabled
+                  defaultValue={currentUser?.email || "N/A"}
+                  name="email"
+                />
+              )}
             </Box>
             <Box className="w-1/2">
               <label>Phone</label>
-              <TextField.Root
-                radius="large"
-                defaultValue={currentUser?.phone || "N/A"}
-                name="phone"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  defaultValue={currentUser?.phone || "N/A"}
+                  name="phone"
+                />
+              )}
             </Box>
           </Flex>
 
           <Flex gap="6">
             <Box className="w-1/2">
               <label>ID/Passport No.</label>
-              <TextField.Root
-                radius="large"
-                defaultValue={currentUser?.id_passport || "N/A"}
-                name="id_passport"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  defaultValue={currentUser?.id_passport || "N/A"}
+                  name="id_passport"
+                />
+              )}
             </Box>
             <Box className="w-1/2">
               <label>Physical Address</label>
-              <TextField.Root
-                radius="large"
-                defaultValue={currentUser?.address || "N/A"}
-                name="address"
-              />
+              {isLoading ? (
+                <Skeleton height="2rem" />
+              ) : (
+                <TextField.Root
+                  radius="large"
+                  defaultValue={currentUser?.address || "N/A"}
+                  name="address"
+                />
+              )}
             </Box>
           </Flex>
 

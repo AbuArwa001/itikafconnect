@@ -4,17 +4,19 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 // import NavItem from "./NavItem";
-import Profile from "./Profile";
 import { Flex } from "@radix-ui/themes";
+import Profile from "./Profile";
 
 function Navbar() {
   const user = useSession().data?.user;
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  // const [isLoading, setIsLoading] = useState(true);
   const toggleSidebar = () => {
     setIsSidebarExpanded(!isSidebarExpanded);
   };
   const { status, data: session } = useSession();
 
+  // useEffect(() => {});
   return (
     <>
       {/* Navbar */}
@@ -66,19 +68,16 @@ function Navbar() {
           </div>
           <div className="flex-none">
             {status === "loading" && (
-                <Skeleton width="3rem" height="3rem" />
-              ) && <Skeleton width="3rem" />}
+              <Skeleton width="3rem" height="3rem" className="rounded-md" />
+            )}
             {/* {status === "authenticated" && <NavItem />} */}
             {user && <Profile user={session?.user ?? null} />}
-            {!user && (
-              <div className="flex-1">
-                <Link
-                  href="/"
-                  className="btn btn-ghost text-xl text-dark-brown"
-                >
-                  Login
-                </Link>
-              </div>
+            {status === "unauthenticated" && (
+              // <div className="flex-1 ">
+              //  </div>
+              <Link href="/" className="btn btn-ghost text-xl text-dark-brown">
+                Login
+              </Link>
             )}
           </div>
         </Flex>

@@ -1,16 +1,15 @@
 // ProfiLeInfor.tsx
 "use client";
 import { getFileUrl, getProfileUrl } from "@/app/api/awsS3/s3";
-import { Box, Button, Card, Flex, TextField } from "@radix-ui/themes";
-// import { useSession } from "next-auth/react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Box, Card, Flex, TextField } from "@radix-ui/themes";
 import { updateUserProfilePictureInDB } from "@/app/api/awsS3/s3";
 import defaultImg from "@/app/assets/images/Default.jpg";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { User } from "@prisma/client";
 import { Skeleton } from "@/app/components";
+import { User } from "@prisma/client";
+import axios from "axios";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export interface ProfiLeInforProps {
   user: User | null;
@@ -203,9 +202,9 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
             </Box>
           </Flex>
 
-          <Button color="orange" className="w-full" type="submit">
+          {/* <Button color="orange" className="w-full" type="submit">
             Edit Profile
-          </Button>
+          </Button> */}
         </form>
       </Card>
     </Flex>
