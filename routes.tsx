@@ -8,7 +8,11 @@ export const publicRoutes: string[] = [""];
  * Array of routes that require authentication
  * @type {string[]}
  */
-export const authRoutes: string[] = ["/auth/login", "/auth/signup"];
+export const authRoutes: string[] = [
+  "/auth/login",
+  "/auth/signup",
+  "/auth/error",
+];
 
 /**
  * The prefix of Api Authentication and database interactions

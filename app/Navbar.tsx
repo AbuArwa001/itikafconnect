@@ -15,7 +15,6 @@ function Navbar() {
     setIsSidebarExpanded(!isSidebarExpanded);
   };
   const { status, data: session } = useSession();
-  const isLoading = !session?.user;
 
   // useEffect(() => {});
   return (
@@ -70,14 +69,8 @@ function Navbar() {
           <div className="flex-none">
             {status === "loading" ? (
               <Skeleton width="3rem" height="3rem" className="rounded-md" />
-            ) : status === "authenticated" ? (
-              <Profile user={session?.user ?? null} />
             ) : (
-              // <div className="flex-1 ">
-              //  </div>
-              <Link href="/" className="btn btn-ghost text-xl text-dark-brown">
-                Login
-              </Link>
+              <Profile user={session?.user ?? null} />
             )}
           </div>
         </Flex>
