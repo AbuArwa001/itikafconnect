@@ -7,6 +7,9 @@ export const EventSchema = z.object({
   description: z.string().min(4, "Please provide Description").max(300),
 });
 
+export const ResetSchema = z.object({
+  email: z.string().email("Email is Required"),
+});
 export const LoginSchema = z.object({
   email: z.string().email("Email is Required"),
   password: z.string().min(1, "Password is Required"),
