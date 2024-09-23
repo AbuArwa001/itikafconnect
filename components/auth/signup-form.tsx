@@ -24,7 +24,7 @@ type SignupFormValues = z.infer<typeof SignupSchema>;
 export const SignUpForm = () => {
   const [isPending, setIsPending] = useTransition();
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [success, setSuccess] = useState<string | undefined>("");
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(SignupSchema),
@@ -38,11 +38,11 @@ export const SignUpForm = () => {
     setError("");
     setSuccess("");
     setIsPending(() => {
-      signup(data).then((response: { error?: string }) => {
+      signup(data).then((response: { error?: string; success?: string }) => {
         if (response.error) {
           setError(response.error);
         } else {
-          setSuccess("Login Success");
+          setSuccess(response?.success);
         }
       });
     });

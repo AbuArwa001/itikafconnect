@@ -19,6 +19,7 @@ import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { login } from "@/actions/login";
 import { useState } from "react";
+import Link from "next/link";
 type LoginFormValues = z.infer<typeof LoginSchema>;
 
 export const LoginForm = () => {
@@ -88,6 +89,14 @@ export const LoginForm = () => {
                       placeholder="********"
                     />
                   </FormControl>
+                  <Button
+                    size="sm"
+                    variant="link"
+                    asChild
+                    className="px-0 font-normal"
+                  >
+                    <Link href="/auth/reset">Forgot Password?</Link>
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}

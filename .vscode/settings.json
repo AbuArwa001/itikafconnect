@@ -3,6 +3,7 @@
         "daisyui",
         "sidemenu",
         "Signup",
-        "tailwindcss"
+        "tailwindcss",
+        "uuidv"
     ]
 }

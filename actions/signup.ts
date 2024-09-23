@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import { SignupSchema } from "@/app/validationSchema";
 import { getUserByEmail } from "@/app/users/users";
 import prisma from "@/prisma/client";
+import { generateVerificationToken } from "@/utils/tokens";
+import { sendVerificationEmail } from "@/utils/mails";
 // import { sendVerificationEmail } from "@/utils/mails";
 
 type LoginFormValues = z.infer<typeof SignupSchema>;
@@ -27,6 +29,7 @@ export const signup = async (data: LoginFormValues) => {
       name,
     },
   });
-  // await sendVerificationEmail(email)
-  return { success: "Account Created" };
+  const verificationToken = await generateVerificationToken(email);
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
+  return { success: "Confirmation Email sent" };
 };

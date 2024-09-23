@@ -5,6 +5,9 @@ import { LoginSchema } from "@/app/validationSchema";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
+import { generateVerificationToken } from "@/utils/tokens";
+import { getUserByEmail } from "@/app/users/users";
+import { sendVerificationEmail } from "@/utils/mails";
 type LoginFormValues = z.infer<typeof LoginSchema>;
 
 export const login = async (data: LoginFormValues) => {
@@ -13,6 +16,21 @@ export const login = async (data: LoginFormValues) => {
     return { error: "Invalid Cridential" };
   }
   const { email, password } = validatedFields.data;
+  const existingUser = await getUserByEmail(email);
+  if (!existingUser || !existingUser.email || !existingUser.password) {
+    return { error: "Email does not exist" };
+  }
+  if (!existingUser.emailVerified) {
+    const verificationToken = await generateVerificationToken(
+      existingUser.email
+    );
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token
+    );
+
+    return { success: "Confirmation Email sent" };
+  }
   try {
     await signIn("credentials", {
       email,
@@ -28,6 +46,7 @@ export const login = async (data: LoginFormValues) => {
     }
     throw error;
   }
+
   return { success: "Login successful" };
 };
 // export const login = async (email: string, password: string) => {
