@@ -58,6 +58,8 @@ I'tikafConnect is an online platform for managing I'tikaf registrations and even
 - **Image Thumbnails**: Automatically generate and display image thumbnails using Bull queues.
 - **AWS S3 Integration**: Attach and manage user profile pictures and documents in an S3 bucket.
 
+## 🔠 Data Modelling
+[![Database](https://itikafconnect.s3.eu-north-1.amazonaws.com/itiqafconnect.png)](https://itikafconnect.s3.eu-north-1.amazonaws.com/itiqafconnect.png)
 ## 🗂 Project Structure
 ```bash
 .

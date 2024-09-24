@@ -10,6 +10,19 @@ export const EventSchema = z.object({
 export const ResetSchema = z.object({
   email: z.string().email("Email is Required"),
 });
+export const NexOfKeenSchema = z.object({
+  next_of_kin: z.string().min(6, {
+    message: "Minimum of 6 characters is required",
+  }),
+  next_of_kin_no: z.string().min(6, {
+    message: "Minimum of 10 characters is required",
+  }),
+});
+export const NewPasswordSchema = z.object({
+  password: z.string().min(6, {
+    message: "Minimum of 6 characters is required",
+  }),
+});
 export const LoginSchema = z.object({
   email: z.string().email("Email is Required"),
   password: z.string().min(1, "Password is Required"),
