@@ -18,9 +18,6 @@ const NextOfKeen = ({ user }: ProfiLeInforProps) => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    console.log("Data", data);
-    console.log("Data", data.next_of_kin_no);
-    console.log("Data", data.next_of_kin);
     try {
       setSubmit(true);
       const res = await axios.patch(`/api/users/${currentUser?.id}`, {

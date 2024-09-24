@@ -1,4 +1,4 @@
-import defaultImage from "@/app/assets/images/defaultImage.png";
+import defaultImage from "@/app/assets/images/Default.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import { LogoutForm } from "./components/LogoutForm";

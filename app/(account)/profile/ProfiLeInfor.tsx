@@ -5,7 +5,8 @@ import {
   getProfileUrl,
   updateUserProfilePictureInDB,
 } from "@/app/api/awsS3/s3";
-import defaultImg from "@/app/assets/images/Default.jpg";
+import defaultImage from "@/app/assets/images/Default.jpg";
+// import defaultImg from "@/app/assets/images/Default.jpg";
 import { Skeleton } from "@/app/components";
 import { User } from "@prisma/client";
 import { Box, Button, Card, Flex, TextField } from "@radix-ui/themes";
@@ -32,13 +33,10 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
       if (currentUser) {
         try {
           // Fetch the profile URL for the current user
-          const url = (await getProfileUrl(currentUser.id)) || "/profile.jpg";
+          const url = await getProfileUrl(currentUser.id);
           // console.log(currentUser);
           // console.log(url);
-          url
-            ? setProfileUrl(url)
-            : setProfileUrl(process.env.NEXT_PUBLIC_DEFAULT_USER || "");
-          setProfileUrl(url); // Update state with the S3 URL
+          url ? setProfileUrl(url) : setProfileUrl("");
         } catch (error) {
           console.error("Error fetching profile URL:", error);
         }
@@ -46,14 +44,15 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
     };
 
     fetchProfileUrl();
+    console.log("profile", profileUrl);
   }, [currentUser]);
 
+  // console.log("CURRENT USER", currentUser);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-
     try {
       const res = await axios.patch(`/api/users/${currentUser?.id}`, {
         name: `${data.firstName} ${data.lastName}`,
@@ -80,6 +79,7 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("email", currentUser?.email || "DefaultUser");
+    console.log("formData", formData);
 
     try {
       const res = await fetch("/api/awsS3", {
@@ -119,7 +119,7 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
             <Skeleton height="18rem" width="18rem" />
           ) : (
             <Image
-              src={profileUrl || defaultImg}
+              src={currentUser.profile_picture || defaultImage}
               alt="Profile Picture"
               height={300}
               width={300}
