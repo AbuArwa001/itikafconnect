@@ -1,5 +1,5 @@
 import { getUserByEmail } from "@/app/users/users";
-import { UserSchema } from "@/app/validationSchema";
+import { NexOfKeenSchema, UserSchema } from "@/app/validationSchema";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -25,25 +25,85 @@ export async function GET(
 }
 
 export async function PATCH(request: NextRequest) {
-  const body = await request.json();
-  const userValidation = UserSchema.safeParse(body);
-  // console.log("BODY", body);
-  if (!userValidation.success) {
-    return NextResponse.json(userValidation.error.format(), { status: 400 });
+  try {
+    const body = await request.json();
+    let userValidation;
+    let updatedUser;
+
+    // Check if the request is for updating "next of kin" information
+    console.log("body.next_of_kin", body);
+    if (body.next_of_kin) {
+      userValidation = NexOfKeenSchema.safeParse(body);
+      console.log("userValidation", userValidation);
+      // Validation failed
+      if (!userValidation.success) {
+        return NextResponse.json(userValidation.error.format(), {
+          status: 400,
+        });
+      }
+
+      // Destructure validated data
+      const { next_of_kin, next_of_kin_no, email } = userValidation.data;
+
+      // Check if the user exists
+      const user = await getUserByEmail(email);
+      if (!user) {
+        return NextResponse.json(
+          { message: "User not found" },
+          { status: 404 }
+        );
+      }
+
+      // Update the user with "next of kin" information
+      updatedUser = await prisma.user.update({
+        where: { email },
+        data: {
+          next_of_kin,
+          next_of_kin_no,
+        },
+      });
+    } else {
+      // Handle general user updates
+      userValidation = UserSchema.safeParse(body);
+
+      // Validation failed
+      if (!userValidation.success) {
+        return NextResponse.json(userValidation.error.format(), {
+          status: 400,
+        });
+      }
+
+      // Destructure validated data
+      const { name, phone, id_passport, address, email } = userValidation.data;
+
+      // Check if the user exists
+      const user = await getUserByEmail(email);
+      if (!user) {
+        return NextResponse.json(
+          { message: "User not found" },
+          { status: 404 }
+        );
+      }
+
+      // Update the user with general information
+      updatedUser = await prisma.user.update({
+        where: { email },
+        data: {
+          name,
+          phone,
+          id_passport,
+          address,
+        },
+      });
+    }
+
+    // Return the updated user data
+    return NextResponse.json(updatedUser, { status: 200 });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
   }
-  const { name, phone, id_passport, address, email } = userValidation.data;
-  const user = await getUserByEmail(email);
-  if (!user) {
-    return NextResponse.json({ message: "User not found" }, { status: 404 });
-  }
-  const updatedUser = await prisma.user.update({
-    where: { email },
-    data: {
-      name,
-      phone,
-      id_passport,
-      address,
-    },
-  });
-  return NextResponse.json(updatedUser, { status: 200 });
 }

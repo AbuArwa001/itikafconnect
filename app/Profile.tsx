@@ -19,7 +19,6 @@ const Profile = ({ user }: ProfileProps) => {
     { label: "settings", href: "/settings" },
     // { label: "logout", href: "/api/auth/signout" },
   ];
-  console.log("USER", user);
   return (
     <div className="dropdown dropdown-end">
       <div
