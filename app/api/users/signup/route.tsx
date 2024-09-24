@@ -9,7 +9,6 @@ import { getUserByEmail } from "@/app/users/users";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    // console.log(body);
 
     // Validate the request body
     const signupValidation = SignupSchema.safeParse(body);

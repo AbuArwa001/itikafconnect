@@ -19,7 +19,6 @@ const RegisterEventButton = ({
   eventStatus,
   status,
 }: Event) => {
-  console.log("eventStatus", eventStatus);
   const [loading, setLoading] = React.useState<boolean>(false);
   const disable =
     eventStatus === "ENDED" ||

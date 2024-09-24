@@ -29,12 +29,8 @@ export async function PATCH(request: NextRequest) {
     const body = await request.json();
     let userValidation;
     let updatedUser;
-
-    // Check if the request is for updating "next of kin" information
-    console.log("body.next_of_kin", body);
     if (body.next_of_kin) {
       userValidation = NexOfKeenSchema.safeParse(body);
-      console.log("userValidation", userValidation);
       // Validation failed
       if (!userValidation.success) {
         return NextResponse.json(userValidation.error.format(), {

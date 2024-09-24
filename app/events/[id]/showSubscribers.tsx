@@ -15,7 +15,6 @@ const ShowSubscribers = ({ eventId }: { eventId: number }) => {
     setLoading(true);
     await delay(2000);
     setLoading(false);
-    console.log("Show All Subscribers");
   };
 
   return (

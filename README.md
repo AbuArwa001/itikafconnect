@@ -36,30 +36,6 @@ I'tikafConnect is an online platform for managing I'tikaf registrations and even
 - **Responsive UI**: Adaptive user interface using Radix UI and Tailwind CSS for a smooth experience across devices.
 - **Performance**: Leveraging Next.js and optimized components for fast page load times.
 
----
-
-
-
-## Tech Stack
-
-- **Frontend**: Vite + React, Tailwind CSS
-- **Backend**: Python (FastAPI or Flask)
-- **Database**: MySQL (via Prisma for database schema management)
-- **Auth**: NextAuth.js for authentication
-- **File Storage**: Amazon S3 for managing user profile attachments
-- **Others**: Radix UI themes, React Hook Form, Zod for validation, bcrypt for password encryption
-
-## Features
-
-- **User Roles**: Admin and User roles with specific access permissions.
-- **I'tikaf Events**: Add, manage, and register for different I'tikaf events.
-- **Authentication**: Secure signup and login using NextAuth.js.
-- **Profile Management**: Update and print profile information, manage next of kin details, and upload attachments.
-- **Image Thumbnails**: Automatically generate and display image thumbnails using Bull queues.
-- **AWS S3 Integration**: Attach and manage user profile pictures and documents in an S3 bucket.
-
-## 🔠 Data Modelling
-[![Database](https://itikafconnect.s3.eu-north-1.amazonaws.com/itiqafconnect.png)](https://itikafconnect.s3.eu-north-1.amazonaws.com/itiqafconnect.png)
 ## 🗂 Project Structure
 ```bash
 .
@@ -299,6 +275,9 @@ Key tables include:
 - **Profiles**: Stores user profile details, including next of kin information and attachments.
 
 The schema is managed using **Prisma**, an ORM that makes database migrations, queries, and schema management easy by integrating directly with our codebase.
+
+## 🔠 Data Modelling
+[![Database](https://itikafconnect.s3.eu-north-1.amazonaws.com/itiqafconnect.png)](https://itikafconnect.s3.eu-north-1.amazonaws.com/itiqafconnect.png)
 
 ## 🏗️ Prisma ORM
 

@@ -38,7 +38,6 @@ export default async function RootLayout({
   let classLogin = "";
   const session = await getsession();
   if (session?.user === undefined) {
-    console.log("session", session?.user);
     const arrClas = [
       "justify-center",
       "items-center",

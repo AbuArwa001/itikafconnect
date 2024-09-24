@@ -13,35 +13,6 @@ const s3Client = new S3Client({
   },
 });
 
-// export const uploadFile = async (
-//   file: Buffer,
-//   fileName: string,
-//   userName: string
-// ) => {
-//   const filBuffer = file;
-//   try {
-//     // Convert the file to a Blob
-//     // const blob =
-//     //   file instanceof Blob ? file : new Blob([file], { type: file.type });
-
-//     // Create the S3 upload parameters
-//     const params = {
-//       Bucket: BUCKET_NAME,
-//       Key: `${userName}/${fileName}`,
-//       Body: filBuffer,
-//       ContentType: "image/jpeg",
-//     };
-
-//     // Upload the file to S3
-//     const command = new PutObjectCommand(params);
-//     await s3Client.send(command);
-
-//     console.log("File uploaded successfully");
-//   } catch (error) {
-//     console.error("Error uploading file:", error);
-//   }
-// };
-
 export const getFileUrl = async (fileName: string, userName: string) => {
   const command = new GetObjectCommand({
     Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,

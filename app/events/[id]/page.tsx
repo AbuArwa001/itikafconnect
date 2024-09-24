@@ -35,7 +35,6 @@ const EventDetail = async ({ params: { id } }: props) => {
   const events = await fetchRegistration(session?.user.id || "", event.id);
   const eventStatus = !events ? { status: "Not Registered" } : events;
   // events.length !== 0 ? events = ["Not Registered"] : events;
-  console.log(eventStatus);
   return (
     <Grid columns={{ initial: "1", sm: "5" }} gap="3">
       <Box className="md:col-span-4">

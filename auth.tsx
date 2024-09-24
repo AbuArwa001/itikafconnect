@@ -30,13 +30,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
     // Handle session callback, customize session object with user role
     async session({ session, token }) {
-      // console.log("sessionToken", token);
       if (token.sub) {
         session.user.id = token.sub;
       }
       if (token.role) {
         session.user.role = token.role as UserRole;
-        // console.log("sessionUser", session.user);
       }
       return session;
     },
@@ -47,7 +45,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       const existingUser = await getUserById(token.sub);
       if (existingUser) {
         token.role = existingUser.role;
-        // console.log("jwt", token);
       }
       return token;
     },

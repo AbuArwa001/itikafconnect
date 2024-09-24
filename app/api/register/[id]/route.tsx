@@ -52,7 +52,6 @@ export async function PATCH(
   // Extract `id` from the URL path params
   // Parse the request body
   const body = await request.json();
-  console.log("params", params);
   const { id } = params;
 
   if (!id) {

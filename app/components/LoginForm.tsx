@@ -44,13 +44,11 @@ const LoginForm = () => {
     }
 
     try {
-      console.log(data);
       const user = await axios.post("/api/users/login", data);
       if (!user) {
         setError("Invalid email or password");
         return;
       }
-      console.log(user);
       router.push("/dashboard");
       router.refresh();
     } catch (error) {

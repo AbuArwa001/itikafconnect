@@ -35,7 +35,6 @@ export default auth((req): Response | void => {
   }
   // If the user is not logged in and it's not a public route, redirect to login page
   if (!isLoggedIn && !isPublicRoute) {
-    console.log("redirecting to login");
     return Response.redirect(new URL("/auth/login", nextUrl));
   }
 

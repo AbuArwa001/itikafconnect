@@ -2,9 +2,7 @@
 import { Button, Flex } from "@radix-ui/themes";
 
 const LoginButton = () => {
-  const handleLogin = () => {
-    console.log("session");
-  };
+  const handleLogin = () => {};
 
   return (
     <Flex justify="center" gap="2" className="mt-4 mb-4">

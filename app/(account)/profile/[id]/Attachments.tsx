@@ -44,7 +44,6 @@ const Attachments = ({ user }: ProfiLeInforProps) => {
       "email",
       `${currentUser?.email}/${fileName}` || "DefaultUser"
     );
-    console.log(`File name: ${currentUser?.email}/${fileName}`);
     try {
       const res = await fetch("/api/awsS3", {
         method: "POST",
@@ -59,7 +58,6 @@ const Attachments = ({ user }: ProfiLeInforProps) => {
         `${fileName}/${file.name}`,
         currentUser?.email || "DefaultUser"
       );
-      console.log("NEW URL newprof", newProfileUrl);
       if (fileName === "id_front") {
         await updateUserIdFrontInDB(currentUser?.email || "", newProfileUrl);
       }

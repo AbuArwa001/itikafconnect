@@ -20,7 +20,6 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
   const [profileUrl, setProfileUrl] = useState("");
   const router = useRouter();
   const isLoading = !user;
-  console.log(currentUser);
   // Fetch profile picture from S3
   useEffect(() => {
     const fetchProfileUrl = async () => {

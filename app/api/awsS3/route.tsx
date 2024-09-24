@@ -12,7 +12,6 @@ const s3Client = new S3Client({
 
 async function uploadFileToS3(file: Buffer, fileName: string, email: string) {
   const filBuffer = file;
-  console.log(fileName);
 
   const params = {
     Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
@@ -29,7 +28,6 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const file = formData.get("file");
     const email = formData.get("email");
-    console.log("EMAIL", email);
 
     if (!file) {
       return NextResponse.json({ error: "No file found" }, { status: 400 });

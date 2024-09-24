@@ -5,11 +5,10 @@ interface LoginButtonProps {
   mode?: "modal" | "redirect";
   asChild?: boolean;
 }
-const LoginButton = ({ children, mode, asChild }: LoginButtonProps) => {
+const LoginButton = ({ children, mode }: LoginButtonProps) => {
   const router = useRouter();
   const onClick = () => {
     router.push("auth/login");
-    console.log("Login button clicked");
   };
   if (mode === "modal") {
     return (

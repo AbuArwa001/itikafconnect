@@ -12,7 +12,6 @@ export async function GET(
 
   // Use findUnique instead of findMany to retrieve a single user
   const user = await prisma.user.findUnique({ where });
-  // console.log("user", user);
 
   if (!user) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });

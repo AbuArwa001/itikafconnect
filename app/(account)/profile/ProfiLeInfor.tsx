@@ -34,8 +34,6 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
         try {
           // Fetch the profile URL for the current user
           const url = await getProfileUrl(currentUser.id);
-          // console.log(currentUser);
-          // console.log(url);
           url ? setProfileUrl(url) : setProfileUrl("");
         } catch (error) {
           console.error("Error fetching profile URL:", error);
@@ -79,7 +77,6 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("email", currentUser?.email || "DefaultUser");
-    console.log("formData", formData);
 
     try {
       const res = await fetch("/api/awsS3", {
@@ -96,7 +93,6 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
         data.fileName,
         currentUser?.email || "DefaultUser"
       );
-      console.log("NEW URL DATa", data.fileName);
 
       // Update the user's profile picture URL in the database
       await updateUserProfilePictureInDB(

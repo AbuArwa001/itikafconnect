@@ -5,7 +5,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log("Request Method: ", req.method);
   if (req.method === "POST") {
     await signOut();
     res.status(200).json({ message: "Signed out" });
