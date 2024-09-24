@@ -1,14 +1,13 @@
-import { Button, Flex } from "@radix-ui/themes";
-import Link from "next/link";
+import { Flex } from "@radix-ui/themes";
 import RegistrationStatusFilter from "./RegistrationStatusFilter";
 
 const EventActions = () => {
   return (
     <Flex justify="between">
       <RegistrationStatusFilter />
-      <Button>
+      {/* <Button>
         <Link href="/events/new">Add event</Link>
-      </Button>
+      </Button> */}
     </Flex>
   );
 };

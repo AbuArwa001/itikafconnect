@@ -32,7 +32,6 @@ const RegistrationTable = ({ searchParams, reg, currentUser }: Props) => {
   const { eventid: eventId } = useParams();
   const [records, setRecords] = useState<RegistrationWithUser[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  // const currentUser = useSession().data?.user;
 
   // Fetch user data when the component mounts
   useEffect(() => {
@@ -213,5 +212,5 @@ const columns: {
 //? { [searchParams.orderBy]: "asc" }
 //: undefined;
 
-// const columnNames = columns.map((column) => column.value);
+export const columnNames = columns.map((column) => column.value);
 export default RegistrationTable;

@@ -7,12 +7,44 @@ import { useReactToPrint } from "react-to-print";
 import Attachments from "./Attachments";
 import NextOfKeen from "./NextOfKeen";
 import ProfiLeInfor from "./ProfiLeInfor";
+import { generatePdf } from "@/actions/send-profile-email";
+
+// import { sendProfileEmail } from "@/utils/mails";
 
 interface props {
   params: {
     id: string;
   };
 }
+
+// Helper function to convert HTML to PDF
+
+// In your frontend component or utility file
+// export const sendProfileEmail = async (
+//   email: string,
+//   subject: string,
+//   htmlContent: string
+// ) => {
+//   try {
+//     const response = await fetch("/api/sendEmail", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ email, subject, htmlContent }),
+//     });
+
+//     if (!response.ok) {
+//       throw new Error("Failed to send email");
+//     }
+
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.error("Error in sendEmail:", error);
+//     throw error;
+//   }
+// };
 
 const Account = ({ params: { id } }: props) => {
   const componentRef = useRef(null);
@@ -23,11 +55,7 @@ const Account = ({ params: { id } }: props) => {
       try {
         const res = await axios.get(`/api/users/${id}`);
         const fetchedUser = res.data as User;
-        if (fetchedUser) {
-          setUser(fetchedUser);
-        } else {
-          console.error("User not found");
-        }
+        setUser(fetchedUser);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -38,9 +66,30 @@ const Account = ({ params: { id } }: props) => {
     }
   }, [id]);
 
+  // Function to handle printing or saving as PDF
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+
+  // Function to send the profile via email
+  const handleSendEmail = async () => {
+    if (user?.email) {
+      // generatePdf(user.email, componentRef);
+    } else {
+      console.error("User email not found");
+    }
+    // try {
+    //   await sendProfileEmail(
+    //     "khalfanathman12@gmail.com",
+    //     `User Profile Information for ${user?.email}`,
+    //     `<p>Please find attached the profile information of user ${user?.name}.</p>`
+    //   );
+    //   alert("Email sent successfully!");
+    // } catch (error) {
+    //   console.error("Error sending email:", error);
+    //   alert("Failed to send email.");
+    // }
+  };
 
   return (
     <div>
@@ -55,7 +104,7 @@ const Account = ({ params: { id } }: props) => {
 
             <ProfiLeInfor user={user} />
 
-            <NextOfKeen />
+            <NextOfKeen user={user} />
 
             <Attachments user={user} />
           </Flex>
@@ -69,6 +118,13 @@ const Account = ({ params: { id } }: props) => {
           className="bg-light_gold text-white"
         >
           Print Profile
+        </Button>
+        <Button
+          color="green"
+          onClick={handleSendEmail}
+          className="bg-light_gold text-white ml-4"
+        >
+          Send Profile via Email
         </Button>
       </Flex>
     </div>

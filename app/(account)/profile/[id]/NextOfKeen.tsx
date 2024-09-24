@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Card, Flex, TextField } from "@radix-ui/themes";
-import { useSession } from "next-auth/react";
 import Skeleton from "@/app/components/Skeleton";
+import { ProfiLeInforProps } from "../ProfiLeInfor";
 
-const NextOfKeen = () => {
-  const currentUser = useSession().data;
+const NextOfKeen = ({ user }: ProfiLeInforProps) => {
+  const currentUser = user;
   const isLoading = !currentUser;
   return (
     <Card className="p-4 w-full">
@@ -18,7 +18,7 @@ const NextOfKeen = () => {
             ) : (
               <TextField.Root
                 radius="large"
-                defaultValue={currentUser?.user.next_of_kin || "N/A"}
+                defaultValue={user.next_of_kin || "N/A"}
               />
             )}
           </Box>
@@ -29,7 +29,7 @@ const NextOfKeen = () => {
             ) : (
               <TextField.Root
                 radius="large"
-                defaultValue={currentUser?.user.next_of_kin_no || "N/A"}
+                defaultValue={user.next_of_kin_no || "N/A"}
               />
             )}
           </Box>
