@@ -38,6 +38,7 @@
     "medusajs": "^1.2.4",
     "next": "14.2.8",
     "next-auth": "^5.0.0-beta.20",
+    "pdf-lib": "^1.17.1",
     "prisma": "^5.19.1",
     "puppeteer": "^23.4.0",
     "react": "^18",

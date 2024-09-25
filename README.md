@@ -242,6 +242,18 @@ Create a ```.env``` file and fill in the required environment variables.
 cp .env.example .env
 npm run dev
 ```
+## 📄 SCREENSHOTS
+1. Loging
+![Login](https://itikafconnect.s3.eu-north-1.amazonaws.com/PROJECT/3.png)
+2. DashBoard
+![DashBord](https://itikafconnect.s3.eu-north-1.amazonaws.com/PROJECT/dash.png)
+3. Events List
+![Events](https://itikafconnect.s3.eu-north-1.amazonaws.com/PROJECT/5.png)
+4. Profile Page
+![Profile1](https://itikafconnect.s3.eu-north-1.amazonaws.com/PROJECT/1.png)
+5. Profile Attachments
+![Profile2](https://itikafconnect.s3.eu-north-1.amazonaws.com/PROJECT/2.png)
+
 ## 📄 API Endpoints
 
 | Method | Endpoint                | Description                        |

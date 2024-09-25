@@ -1,4 +1,5 @@
 "use client";
+import { generatePdf } from "@/actions/send-profile-email";
 import { User } from "@prisma/client";
 import { Button, Card, Flex } from "@radix-ui/themes";
 import axios from "axios";
@@ -7,7 +8,6 @@ import { useReactToPrint } from "react-to-print";
 import Attachments from "./Attachments";
 import NextOfKeen from "./NextOfKeen";
 import ProfiLeInfor from "./ProfiLeInfor";
-import { generatePdf } from "@/actions/send-profile-email";
 
 // import { sendProfileEmail } from "@/utils/mails";
 
@@ -49,6 +49,7 @@ interface props {
 const Account = ({ params: { id } }: props) => {
   const componentRef = useRef(null);
   const [user, setUser] = useState<User | null>(null);
+  const isAdmin = user?.role === "ADMIN";
 
   useEffect(() => {
     async function fetchUserData(id: string) {
@@ -74,7 +75,7 @@ const Account = ({ params: { id } }: props) => {
   // Function to send the profile via email
   const handleSendEmail = async () => {
     if (user?.email) {
-      // generatePdf(user.email, componentRef);
+      generatePdf("khalfanathman12@gmail.com", componentRef);
     } else {
       console.error("User email not found");
     }
@@ -111,22 +112,24 @@ const Account = ({ params: { id } }: props) => {
         </Card>
       </div>
 
-      <Flex className="justify-center mt-6">
-        <Button
-          color="orange"
-          onClick={handlePrint}
-          className="bg-light_gold text-white"
-        >
-          Print Profile
-        </Button>
-        <Button
-          color="green"
-          onClick={handleSendEmail}
-          className="bg-light_gold text-white ml-4"
-        >
-          Send Profile via Email
-        </Button>
-      </Flex>
+      {isAdmin && (
+        <Flex className="justify-center mt-6">
+          <Button
+            color="orange"
+            onClick={handlePrint}
+            className="bg-light_gold text-white"
+          >
+            Print Profile
+          </Button>
+          <Button
+            color="green"
+            onClick={handleSendEmail}
+            className="bg-light_gold text-white ml-4"
+          >
+            Send Profile via Email
+          </Button>
+        </Flex>
+      )}
     </div>
   );
 };
