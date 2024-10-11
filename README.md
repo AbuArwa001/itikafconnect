@@ -225,9 +225,9 @@ I'tikafConnect is an online platform for managing I'tikaf registrations and even
 1. Clone the repository:
 
 ```bash
-Copy code
 git clone https://github.com/AbuArwa001/itikafconnect.git
-cd itikafconnect```
+cd itikafconnect
+```
 2. Install dependencies:
 ```bash
 npm install
