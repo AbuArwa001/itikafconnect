@@ -9,6 +9,7 @@ import AuthProvider from "./auth/Provider";
 import QueryClientProvider from "./QueryClientProvider";
 import { auth } from "@/auth";
 import Footer from "./Footer";
+import Home from "./dashboard/page";
 // import Sidebar from "./Sidebar"; // Import Sidebar component
 
 const geistSans = localFont({
@@ -70,13 +71,11 @@ export default async function RootLayout({
               </main>
 
               {/* Third child: Sidebar, second column of second row */}
-              {
-                /* {session?.user && ( */
-                // <div className="col-start-1 row-start-2">
-                // <Sidebar />
-                // </div>
-                // )
-              }
+              {session?.user && (
+                <div className="col-start-1 row-start-2">
+                  <Home />
+                </div>
+              )}
               <Footer />
             </Theme>
           </AuthProvider>
