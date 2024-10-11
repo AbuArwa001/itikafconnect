@@ -17,7 +17,8 @@ model Event {
   id           Int            @id @default(autoincrement())
   name         String
   description  String         @db.Text
-  date         DateTime?
+  startDate    DateTime
+  endDate      DateTime
   location     String?
   status       EventStatus    @default(ONGOING)
   createdAt    DateTime       @default(now())
