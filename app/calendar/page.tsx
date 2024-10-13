@@ -1,5 +1,5 @@
 import prisma from "@/prisma/client";
-import CalendarPage from "../components/CalendarPage";
+import CalendarPage from "@/app/components/CalendarPage";
 
 const CalendarP = async () => {
   const eventsToFormat = await prisma.event.findMany();
@@ -8,6 +8,7 @@ const CalendarP = async () => {
     title: event.name,
     start: event.startDate.toISOString(),
     end: event.endDate.toISOString(),
+    url: `/events/${event.id}`,
   }));
 
   return (

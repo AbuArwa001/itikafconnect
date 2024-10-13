@@ -109,11 +109,10 @@ const EventFrm = ({ event }: { event?: Event }) => {
               selected={field.value ? new Date(field.value) : null}
               onChange={(date: Date | null) =>
                 field.onChange(date ? date.toISOString() : null)
-              } // Directly handle onChange
+              } // Handles date change
               dateFormat="yyyy-MM-dd"
               placeholderText="Select Event End Date"
               className="w-full p-2 border rounded m-2"
-              //   defaultValue={event?.date}
             />
           )}
         />

@@ -41,6 +41,12 @@ const CalendarPage: React.FC<CalendarPageProps> = ({ eventsCal }) => {
       initialView="dayGridMonth"
       events={events}
       editable={false}
+      eventClick={(info) => {
+        if (info.event.url) {
+          window.location.href = info.event.url; // Redirects to detail page
+          info.jsEvent.preventDefault(); // Prevents the default behavior
+        }
+      }}
     />
   );
 };
