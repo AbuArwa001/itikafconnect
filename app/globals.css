@@ -176,3 +176,8 @@ footer {
     justify-content: center;
   }
 }
+
+/* Include this in your global CSS if needed */
+.event-tooltip {
+  z-index: 1000;
+}

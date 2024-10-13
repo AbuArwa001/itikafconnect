@@ -8,7 +8,7 @@ const CalendarP = async () => {
     title: event.name,
     start: event.startDate.toISOString(),
     end: event.endDate.toISOString(),
-    url: `/events/${event.id}`,
+    status: event.status,
   }));
 
   return (
