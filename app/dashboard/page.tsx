@@ -6,11 +6,14 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
+  CommandShortcut,
 } from "@/components/ui/command";
 import Link from "next/link";
 import { FaCalendarAlt } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { FaUser } from "react-icons/fa";
+import { RiFoldersFill } from "react-icons/ri";
+import { GoGear } from "react-icons/go";
 
 function Home() {
   return (
@@ -21,7 +24,7 @@ function Home() {
         <CommandGroup heading="Suggestions">
           <CommandItem>
             <LuLayoutDashboard className="mr-2" />
-            DashBoard
+            <Link href="/">DashBoard</Link>
           </CommandItem>
           <CommandItem>
             <FaCalendarAlt
@@ -30,17 +33,23 @@ function Home() {
             />
             <Link href="/calendar">Calendar</Link>
           </CommandItem>
-          <CommandItem>Search Emoji</CommandItem>
-          <CommandItem>Calculator</CommandItem>
+          <CommandItem>
+            <RiFoldersFill className="mr-2" />
+            <Link href="/files">Categories</Link>
+          </CommandItem>
         </CommandGroup>
         <CommandSeparator />
         <CommandGroup heading="Settings">
           <CommandItem>
             <FaUser className="mr-2" />
             <Link href="/profile">Profile</Link>
+            <CommandShortcut>Ctrl + F</CommandShortcut>
           </CommandItem>
-          <CommandItem>Billing</CommandItem>
-          <CommandItem>Settings</CommandItem>
+          {/* <CommandItem>Billing</CommandItem> */}
+          <CommandItem>
+            <GoGear className="mr-2" />
+            Settings
+          </CommandItem>
         </CommandGroup>
       </CommandList>
     </Command>

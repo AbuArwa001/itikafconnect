@@ -5,7 +5,7 @@ import { EventStatusBadge, Link } from "./components";
 const LatestEvents = async () => {
   const events = await prisma.event.findMany({
     orderBy: {
-      date: "desc",
+      startDate: "desc",
     },
     take: 5,
   });

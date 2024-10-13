@@ -55,9 +55,7 @@ export default async function RootLayout({
       >
         <QueryClientProvider>
           <AuthProvider>
-            <Theme
-              className={`${classLogin} grid  min-h-screen grid-rows-[auto_1fr] grid-cols-[auto_1fr]`}
-            >
+            <Theme className={`${classLogin}`}>
               {/* First child: Navbar, spans two columns */}
               {session?.user && (
                 <div className="col-span-2">
@@ -65,17 +63,18 @@ export default async function RootLayout({
                 </div>
               )}
 
-              {/* Second child: Main content, first column of second row */}
-              <main className="col-start-2 row-start-2 p-4">
-                <Container>{children}</Container>
-              </main>
-
               {/* Third child: Sidebar, second column of second row */}
-              {session?.user && (
-                <div className="col-start-1 row-start-2">
-                  <Home />
-                </div>
-              )}
+              <div className="flex">
+                {session?.user && (
+                  <div className="hidden md:block h-[100vh] w-[300px]">
+                    <Home />
+                  </div>
+                )}
+                {/* Second child: Main content, first column of second row */}
+                <main className="p-5 w-full md:max-w-[1140px]">
+                  <Container>{children}</Container>
+                </main>
+              </div>
               <Footer />
             </Theme>
           </AuthProvider>

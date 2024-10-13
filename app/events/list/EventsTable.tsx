@@ -53,7 +53,7 @@ const EventsTable = ({ searchParams, events }: Props) => {
               <EventStatusBadge status={event.status} />
             </Table.Cell>
             <Table.Cell className="hidden md:table-cell">
-              {event.date!.toString()}
+              {event.startDate!.toString()}
             </Table.Cell>
             <Table.Cell className="hidden md:table-cell">
               {event.location}
@@ -78,7 +78,7 @@ const columns: {
 }[] = [
   { label: "Name", value: "name" },
   { label: "On going", value: "status", className: "hidden md:table-cell" },
-  { label: "Date", value: "date", className: "hidden md:table-cell" },
+  { label: "Date", value: "startDate", className: "hidden md:table-cell" },
   { label: "Location", value: "location", className: "hidden md:table-cell" },
   {
     label: "Description",

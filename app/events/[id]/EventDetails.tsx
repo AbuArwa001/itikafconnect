@@ -12,7 +12,7 @@ const EventDetails = async ({ event }: { event: Event }) => {
       <Flex gap={`2`} my={`3`}>
         <p>{event.status}</p>
         <p>Location: {event.location}</p>
-        <p>{event!.date!.toDateString()}</p>
+        <p>{event!.startDate!.toDateString()}</p>
       </Flex>
       <Card className="prose max-w-full" mt={`3`}>
         <ReactMarkdown>{event.description}</ReactMarkdown>
