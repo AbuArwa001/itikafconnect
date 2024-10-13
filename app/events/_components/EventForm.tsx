@@ -30,11 +30,11 @@ const EventFrm = ({ event }: { event?: Event }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (data: EventForm) => {
-    if (!data.date) {
+    if (!data.startDate) {
       return setError("Please select a date for the event");
     }
 
-    const formattedDate = new Date(data.date).toISOString();
+    const formattedDate = new Date(data.startDate).toISOString();
 
     try {
       setIsSubmitting(true);
@@ -85,7 +85,7 @@ const EventFrm = ({ event }: { event?: Event }) => {
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Controller
-          name="date"
+          name="startDate"
           control={control}
           render={({ field }) => (
             <ReactDatePicker
@@ -94,13 +94,30 @@ const EventFrm = ({ event }: { event?: Event }) => {
                 field.onChange(date ? date.toISOString() : null)
               } // Directly handle onChange
               dateFormat="yyyy-MM-dd"
-              placeholderText="Select event date"
+              placeholderText="Select Event Start Date"
               className="w-full p-2 border rounded"
               //   defaultValue={event?.date}
             />
           )}
         />
-        <ErrorMessage>{errors.date?.message}</ErrorMessage>
+        <ErrorMessage>{errors.startDate?.message}</ErrorMessage>
+        <Controller
+          name="endDate"
+          control={control}
+          render={({ field }) => (
+            <ReactDatePicker
+              selected={field.value ? new Date(field.value) : null}
+              onChange={(date: Date | null) =>
+                field.onChange(date ? date.toISOString() : null)
+              } // Directly handle onChange
+              dateFormat="yyyy-MM-dd"
+              placeholderText="Select Event End Date"
+              className="w-full p-2 border rounded m-2"
+              //   defaultValue={event?.date}
+            />
+          )}
+        />
+        <ErrorMessage>{errors.endDate?.message}</ErrorMessage>
         <TextField.Root
           placeholder="Enter Location"
           {...register("location")}

@@ -3,8 +3,11 @@ import { Metadata } from "next";
 import EventsCharts from "./EventsCharts";
 import EventSummary from "./EventSummary";
 import LatestEvents from "./LatestEvents";
+import updateEventStatuses from "@/actions/update-events";
 
 export default async function Home() {
+  await updateEventStatuses();
+  const total = await prisma.event.count();
   const onGoing = await prisma.event.count({
     where: {
       status: "ONGOING",
@@ -23,7 +26,12 @@ export default async function Home() {
 
   return (
     <div className="space-y-4">
-      <EventSummary onGoing={onGoing} ended={ended} cancelled={cancelled} />
+      <EventSummary
+        total={total}
+        onGoing={onGoing}
+        ended={ended}
+        cancelled={cancelled}
+      />
       <EventsCharts onGoing={onGoing} ended={ended} cancelled={cancelled} />
       <LatestEvents />
     </div>

@@ -12,7 +12,7 @@ const DashBoardCard = ({ title, count, icon }: DashBoardCardProps) => {
         <h3 className="text-3xl text-center mb-4 font-bold text-slate-500">
           {title}
         </h3>
-        <div className="flex  flex-row gap-5 items-center ">
+        <div className="flex  flex-row gap-5 items-center justify-center">
           <h3 className="text-5xl font-semibold text-slate-500">{count}</h3>
           <div className="ml-2">{icon}</div>
           {/* <FaNewspaper className="inline text-slate-500" size={72} /> */}

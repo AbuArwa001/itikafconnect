@@ -4,20 +4,28 @@ import { EventStatus } from "@prisma/client";
 import DashBoardCard from "./components/DashboardCard";
 import { EventStatusBadge } from "./components";
 import React from "react";
+import { FcStatistics } from "react-icons/fc";
 
 interface Props {
+  total: number;
   onGoing: number;
   ended: number;
   cancelled: number;
 }
 
-const EventSummary = ({ onGoing, ended, cancelled }: Props) => {
+const EventSummary = ({ total, onGoing, ended, cancelled }: Props) => {
   const statusContainers: {
     label: string;
     value: number;
-    status: EventStatus;
+    status: EventStatus | "TOTAL";
     icon: React.ReactElement;
   }[] = [
+    {
+      label: "Total",
+      value: total,
+      status: "TOTAL",
+      icon: <FcStatistics size={60} />,
+    },
     {
       label: "On Going",
       value: onGoing,
