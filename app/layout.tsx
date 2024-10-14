@@ -75,8 +75,10 @@ export default async function RootLayout({
                   <Container>{children}</Container>
                 </main>
               </div>
-              <Footer />
+              {/* <div>
+              </div> */}
             </Theme>
+            <Footer />
           </AuthProvider>
         </QueryClientProvider>
       </body>
