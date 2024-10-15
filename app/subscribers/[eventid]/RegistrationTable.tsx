@@ -62,7 +62,7 @@ const RegistrationTable = ({ searchParams, reg, currentUser }: Props) => {
     };
 
     fetchUserData();
-  }, [reg]);
+  }, [reg, eventId]);
   const handleApproval = async (registrationId: number) => {
     setLoading(true);
     try {

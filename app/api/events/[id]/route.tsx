@@ -31,7 +31,7 @@ export async function PATCH(
     },
     data: {
       name: body.name,
-      date: body.date,
+      startDate: body.startDate,
       location: body.location,
       description: body.description,
     },

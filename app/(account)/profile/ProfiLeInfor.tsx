@@ -43,7 +43,7 @@ const ProfiLeInfor = ({ user }: ProfiLeInforProps) => {
 
     fetchProfileUrl();
     console.log("profile", profileUrl);
-  }, [currentUser]);
+  }, [currentUser, profileUrl]);
 
   // console.log("CURRENT USER", currentUser);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

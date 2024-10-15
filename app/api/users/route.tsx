@@ -9,27 +9,27 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const where = { id: params.id };
-
-  // Use findUnique instead of findMany to retrieve a single user
   const user = await prisma.user.findUnique({ where });
-
   if (!user) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
-
   return NextResponse.json(user, { status: 200 });
 }
 
 export async function POST(request: NextRequest) {
-  const body = request.json();
+  const body = await request.json(); // Ensure you await the parsing of the JSON
   const loginValidation = LoginSchema.safeParse(body);
   if (!loginValidation.success) {
     return NextResponse.json(loginValidation.error.format(), { status: 400 });
   }
   const { email, password } = loginValidation.data;
   const user = await getUserByEmail(email);
-  if (!user || !user.password) return null;
+  if (!user || !user.password) {
+    return NextResponse.json({ error: "Invalid credentials" }, { status: 401 }); // Use NextResponse here
+  }
   const passwordMatch = await bcrypt.compare(password, user.password);
-  if (passwordMatch) return user;
-  return NextResponse.json(user, { status: 200 });
+  if (passwordMatch) {
+    return NextResponse.json(user, { status: 200 }); // Wrap user in NextResponse
+  }
+  return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
 }
