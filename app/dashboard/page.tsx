@@ -48,7 +48,7 @@ function Home() {
           {/* <CommandItem>Billing</CommandItem> */}
           <CommandItem>
             <GoGear className="mr-2" />
-            Settings
+            <Link href="/settings">Settings</Link>
           </CommandItem>
         </CommandGroup>
       </CommandList>

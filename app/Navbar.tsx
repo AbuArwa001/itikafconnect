@@ -42,6 +42,12 @@ function Navbar() {
             <Link href="/" className="btn btn-ghost text-xl text-dark-brown">
               ItiKafConnect
             </Link>
+            <Link
+              href="/admin"
+              className="btn btn-ghost text-xl text-dark-brown"
+            >
+              Admin
+            </Link>
           </div>
         </div>
         <Flex align="end">

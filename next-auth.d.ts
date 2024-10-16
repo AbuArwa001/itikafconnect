@@ -8,6 +8,7 @@ export type ExtendedUser = DefaultSession & {
   next_of_kin: string;
   next_of_kin_no: string;
   id_front: string | null;
+  isOAuth: boolean;
 } & User;
 declare module "next-auth" {
   interface Session {

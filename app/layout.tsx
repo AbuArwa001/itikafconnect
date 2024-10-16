@@ -10,6 +10,8 @@ import QueryClientProvider from "./QueryClientProvider";
 import { auth } from "@/auth";
 import Footer from "./Footer";
 import Home from "./dashboard/page";
+import { Toaster } from "@/components/ui/sonner";
+
 // import Sidebar from "./Sidebar"; // Import Sidebar component
 
 const geistSans = localFont({
@@ -53,6 +55,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster />
         <QueryClientProvider>
           <AuthProvider>
             <Theme className={`${classLogin}`}>

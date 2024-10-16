@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient, UserRole } from "@prisma/client";
 import NextAuth from "next-auth";
 import { getUserById } from "./app/users/users";
+import { getAccountByUserId } from "./utils/account";
 
 const prisma = new PrismaClient();
 
@@ -36,15 +37,27 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (token.role) {
         session.user.role = token.role as UserRole;
       }
+      if (session.user) {
+        session.user.name = token.name ?? null;
+        session.user.email = token.email ?? "";
+        session.user.isOAuth = token.isOAuth as boolean;
+      }
       return session;
     },
 
     // Handle JWT callback to add role to the token
     async jwt({ token }) {
+      // console.log("I AM BEING CALLED AGAIN");
       if (!token.sub) return token;
       const existingUser = await getUserById(token.sub);
+      const existingAccount = existingUser?.id
+        ? await getAccountByUserId(existingUser.id)
+        : null;
       if (existingUser) {
         token.role = existingUser.role;
+        token.email = existingUser.email;
+        token.name = existingUser.name;
+        token.isOAuth = !!existingAccount;
       }
       return token;
     },
