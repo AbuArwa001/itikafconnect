@@ -31,7 +31,9 @@ const Settings = () => {
   const form = useForm<SettingsForm>({
     resolver: zodResolver(SettingsSchema),
     defaultValues: {
-      email: user?.email ?? "",
+      email: user?.email ?? undefined,
+      password: undefined,
+      newPassword: undefined,
       // Add other fields from SettingsSchema if necessary
     },
   });
@@ -62,7 +64,6 @@ const Settings = () => {
               <FormField
                 control={form.control}
                 name="email"
-                // email="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
@@ -70,6 +71,38 @@ const Settings = () => {
                       <Input
                         {...field}
                         placeholder="SalimSalim@gmail.com"
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="********"
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>New Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="********"
                         disabled={isPending}
                       />
                     </FormControl>

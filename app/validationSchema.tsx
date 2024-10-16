@@ -9,12 +9,37 @@ export const EventSchema = z.object({
   description: z.string().min(4, "Please provide Description"),
 });
 
-export const SettingsSchema = z.object({
-  email: z.optional(z.string().email()),
-  role: z.enum([UserRole.ADMIN, UserRole.USER, UserRole.SUPERADMIN]),
-  password: z.optional(z.string().min(6)),
-  newPassword: z.optional(z.string().min(6)),
-});
+export const SettingsSchema = z
+  .object({
+    email: z.optional(z.string().email()),
+    role: z.enum([UserRole.ADMIN, UserRole.USER, UserRole.SUPERADMIN]),
+    password: z.optional(z.string().min(6)),
+    newPassword: z.optional(z.string().min(6)),
+  })
+  .refine(
+    (data) => {
+      if (!data.password && data.newPassword) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Password Is Required!",
+      path: ["Password"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (!data.newPassword && data.password) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "New Password Is Required!",
+      path: ["newPassword"],
+    }
+  );
 export const ResetSchema = z.object({
   email: z.string().email("Email is Required"),
 });
