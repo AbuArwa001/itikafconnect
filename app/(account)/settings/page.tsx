@@ -12,10 +12,19 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { UserRole } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -24,6 +33,7 @@ import { z } from "zod";
 type SettingsForm = z.infer<typeof SettingsSchema>;
 const Settings = () => {
   const user = useCurrentUser();
+  // console.log(user);
   const { update } = useSession();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
@@ -34,7 +44,7 @@ const Settings = () => {
       email: user?.email ?? undefined,
       password: undefined,
       newPassword: undefined,
-      // Add other fields from SettingsSchema if necessary
+      role: user?.role || undefined,
     },
   });
   const onSubmit = (values: SettingsForm) => {
@@ -60,52 +70,83 @@ const Settings = () => {
       <CardContent>
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="space-x-4">
+            <div className="">
+              {user?.isOAuth === false && (
+                <>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="SalimSalim@gmail.com"
+                            disabled={isPending}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="********"
+                            disabled={isPending}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="newPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>New Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="********"
+                            disabled={isPending}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </>
+              )}
               <FormField
                 control={form.control}
-                name="email"
+                name="role"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="SalimSalim@gmail.com"
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="********"
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="newPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>New Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="********"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                    <FormLabel>Role</FormLabel>
+                    <Select
+                      disabled={isPending}
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a role" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
+                        <SelectItem value={UserRole.USER}>User</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
