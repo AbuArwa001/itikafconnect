@@ -20,10 +20,3 @@ export async function POST(req: Request) {
     );
   }
 }
-
-export const config = {
-  api: {
-    // Enable the body parsing for the API route
-    bodyParser: false,
-  },
-};
