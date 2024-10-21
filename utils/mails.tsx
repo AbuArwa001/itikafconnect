@@ -45,3 +45,17 @@ export const sendProfileEmail = async (email: string) => {
     throw new Error("Failed to send profile email.");
   }
 };
+
+export const sendEmail = async (to: string, subject: string, html: string) => {
+  try {
+    return await resend.emails.send({
+      from: "no-reply@athcongroup.tech",
+      to,
+      subject,
+      html,
+    });
+  } catch (error) {
+    console.error("Error sending email:", error);
+    throw new Error("Failed to send email");
+  }
+};
