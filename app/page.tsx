@@ -25,7 +25,7 @@ export default async function Home() {
   });
 
   return (
-    <div className="space-y-4">
+    <div className="container mx-auto px-4 space-y-6 md:space-y-8 lg:space-y-10 ">
       <EventSummary
         total={total}
         onGoing={onGoing}

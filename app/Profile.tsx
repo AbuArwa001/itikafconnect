@@ -1,6 +1,6 @@
 import defaultImage from "@/app/assets/images/Default.jpg";
 import Link from "next/link";
-import { LogoutForm } from "./components/LogoutForm";
+import { signOut } from "next-auth/react";
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import {
@@ -23,18 +23,23 @@ interface ProfileProps {
 }
 
 const Profile = ({ user }: ProfileProps) => {
-  const initials = `${user?.name?.split(" ")[0].slice(0, 1)}${user?.name
-    ?.split(" ")[1]
-    .slice(0, 1)}`;
+  const initials = `${user?.name
+    ?.split(" ")[0]
+    .slice(0, 1)
+    .toUpperCase()}${user?.name?.split(" ")[1].slice(0, 1).toUpperCase()}`;
+  const handleSignOut = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    signOut();
+  };
   const links = [
-    { label: user?.email, href: "/profile" },
-    { label: "profile", href: "/profile" },
-    { label: "settings", href: "/settings" },
-    // { label: "logout", href: "/api/auth/signout" },
+    // { label: user?.email, href: "/profile" },
+    { label: "Profile", href: "/profile" },
+    { label: "Settings", href: "/settings" },
+    { label: "Logout", href: "#" },
   ];
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="focus:outline-none">
+      <DropdownMenuTrigger className="focus:outline-none m-2 bg-slate-500 rounded-full">
         <Avatar>
           <AvatarImage
             src={
@@ -45,25 +50,34 @@ const Profile = ({ user }: ProfileProps) => {
                 : undefined
             }
           />
-          <AvatarFallback className="text-black">{initials}</AvatarFallback>
+          <AvatarFallback className="text-black py-2 px-3">
+            {initials}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="m-3">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {links.map((link, index) => (
           <DropdownMenuItem key={index}>
-            <Link
-              href={link.href}
-              className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-            >
-              {link.label}
-            </Link>
+            {link.label !== "Logout" ? (
+              <Link
+                href={link.href}
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <Link
+                href="#"
+                onClick={handleSignOut}
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+              >
+                {link.label}
+              </Link>
+            )}
           </DropdownMenuItem>
         ))}
-        <DropdownMenuItem>
-          <LogoutForm />
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
