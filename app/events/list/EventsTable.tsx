@@ -4,6 +4,16 @@ import { ArrowUpIcon } from "@radix-ui/react-icons";
 import { Table } from "@radix-ui/themes";
 import { default as Link, default as NextLink } from "next/link";
 
+const formatDate = (dateString: string) => {
+  const eventDate = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  };
+  return eventDate.toLocaleDateString(undefined, options).replace(/,/, "");
+};
 export interface eventQuery {
   status: EventStatus;
   orderBy: keyof Event;
@@ -14,6 +24,7 @@ interface Props {
   events: Event[];
 }
 const EventsTable = ({ searchParams, events }: Props) => {
+  // const index = event.description.indexOf("#");
   return (
     <Table.Root variant="surface">
       <Table.Header>
@@ -53,16 +64,17 @@ const EventsTable = ({ searchParams, events }: Props) => {
               <EventStatusBadge status={event.status} />
             </Table.Cell>
             <Table.Cell className="hidden md:table-cell">
-              {event.startDate!.toString()}
+              {formatDate(event.startDate.toString())}
             </Table.Cell>
             <Table.Cell className="hidden md:table-cell">
               {event.location}
             </Table.Cell>
             <Table.Cell className="hidden md:table-cell">
-              {event.description}
+              ${event.description.slice(event.description.indexOf("##"), 50)}
+              ...
             </Table.Cell>
             <Table.Cell className="hidden md:table-cell">
-              {event.createdAt.toString()}
+              {formatDate(event.createdAt.toString())}
             </Table.Cell>
           </Table.Row>
         ))}
