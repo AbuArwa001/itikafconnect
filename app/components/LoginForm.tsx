@@ -13,7 +13,6 @@ import {
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import LoginButton from "./LoginButton";
-// import { User } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -22,27 +21,22 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { LoginSchema } from "../validationSchema";
 
-// Infer the schema type
 type UserForm = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
   const {
-    // register,
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<UserForm>({
     resolver: zodResolver(LoginSchema),
   });
-
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-
   const onSubmit = async (data: UserForm) => {
     if (!data) {
       return setError("Please Enter details");
     }
-
     try {
       const user = await axios.post("/api/users/login", data);
       if (!user) {
@@ -58,11 +52,11 @@ const LoginForm = () => {
   };
 
   return (
-    <Flex justify="center" align="center" className="h-screen w-full">
+    <Flex justify="center" align="center" className="min-h-screen w-full p-4">
       <Card
         size="3"
         variant="surface"
-        className="w-full max-w-md bg-light_gold"
+        className="w-full max-w-lg bg-light_gold"
       >
         {/* Image Header */}
         <Inset clip="padding-box" side="top">
@@ -74,9 +68,8 @@ const LoginForm = () => {
             height={160}
           />
         </Inset>
-
         {/* Content Section */}
-        <form className="space-y-3" onSubmit={handleSubmit(onSubmit)}>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <Box className="p-6">
             <Text size="4" weight="bold" mb="2">
               Welcome Back
@@ -84,9 +77,8 @@ const LoginForm = () => {
             <Text as="p" size="2" mb="4">
               Please log in to continue.
             </Text>
-
             {/* Email Input */}
-            <Box mb="2" maxWidth="100%">
+            <Box mb="2" className="w-full">
               <Controller
                 name="email"
                 control={control}
@@ -105,9 +97,8 @@ const LoginForm = () => {
                 </Text>
               )}
             </Box>
-
             {/* Password Input */}
-            <Box mb="2">
+            <Box mb="2" className="w-full">
               <Controller
                 name="password"
                 control={control}
@@ -127,30 +118,24 @@ const LoginForm = () => {
                 </Text>
               )}
             </Box>
-
             {/* Login Button */}
             <LoginButton />
-
             {/* Sign in with Google */}
             <Button
               variant="solid"
-              className="w-full h-12 bg-white mt-4 cursor-pointer"
+              className="w-full h-12 bg-white mt-4 flex items-center justify-center cursor-pointer"
             >
               <FcGoogle size={24} className="mr-2" /> Sign in with Google
             </Button>
-
             {/* Sign Up Link */}
             <Text as="p" className="w-full mt-4 text-center">
               <Link href="/auth/signup">Don&apos;t have an Account?</Link>
             </Text>
-
             {/* Error Display */}
             {error && (
-              <Button className="m-2 p-2 border-opacity-10">
-                <Text as="p" color="red" size="2">
-                  {error}
-                </Text>
-              </Button>
+              <Text as="p" color="red" size="2" className="mt-2">
+                {error}
+              </Text>
             )}
           </Box>
         </form>

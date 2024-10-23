@@ -74,7 +74,7 @@ export default async function RootLayout({
                   </div>
                 )}
                 {/* Second child: Main content, first column of second row */}
-                <main className="p-5 w-full md:max-w-[1140px]">
+                <main className="p-5 w-full">
                   <Container>{children}</Container>
                 </main>
               </div>
