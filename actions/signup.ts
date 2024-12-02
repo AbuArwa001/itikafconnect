@@ -5,7 +5,7 @@ import { SignupSchema } from "@/app/validationSchema";
 import { getUserByEmail } from "@/app/users/users";
 import prisma from "@/prisma/client";
 import { generateVerificationToken } from "@/utils/tokens";
-import { sendVerificationEmail } from "@/utils/mails";
+import { sendVerificationEmail } from "@/app/emails/mails";
 // import { sendVerificationEmail } from "@/utils/mails";
 
 type LoginFormValues = z.infer<typeof SignupSchema>;

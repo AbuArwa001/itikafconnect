@@ -2,7 +2,7 @@
 
 import { getUserByEmail } from "@/app/users/users";
 import { ResetSchema } from "@/app/validationSchema";
-import { sendPasswordResetEmail } from "@/utils/mails";
+import { sendPasswordResetEmail } from "@/app/emails/mails";
 import { generatePasswordResetToken } from "@/utils/tokens";
 import { z } from "zod";
 

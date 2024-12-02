@@ -14,6 +14,7 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { FaUser } from "react-icons/fa";
 import { RiFoldersFill } from "react-icons/ri";
 import { GoGear } from "react-icons/go";
+import { MdEmail } from "react-icons/md";
 
 function Home() {
   return (
@@ -36,6 +37,10 @@ function Home() {
           <CommandItem>
             <RiFoldersFill className="mr-2" />
             <Link href="/files">Categories</Link>
+          </CommandItem>
+          <CommandItem>
+            <MdEmail className="mr-2" />
+            <Link href="/email">Email</Link>
           </CommandItem>
         </CommandGroup>
         <CommandSeparator />
