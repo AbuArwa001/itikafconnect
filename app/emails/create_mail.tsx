@@ -45,9 +45,10 @@ export const NikeReceiptEmail = () => (
             alt="Nike"
             style={{ margin: "auto" }}
           />
-          <Heading style={global.heading}>It's On Its Way.</Heading>
+          <Heading style={global.heading}>It&apos;s On Its Way.</Heading>
           <Text style={global.text}>
-            You order's is on its way. Use the link above to track its progress.
+            You order&apos;s is on its way. Use the link above to track its
+            progress.
           </Text>
           <Text style={{ ...global.text, marginTop: 24 }}>
             We´ve also charged your payment method for the cost of your order
@@ -77,7 +78,8 @@ export const NikeReceiptEmail = () => (
             </Column>
             <Column style={{ verticalAlign: "top", paddingLeft: "12px" }}>
               <Text style={{ ...paragraph, fontWeight: "500" }}>
-                Brazil 2022/23 Stadium Away Women's Nike Dri-FIT Soccer Jersey
+                Brazil 2022/23 Stadium Away Women&apos;s Nike Dri-FIT Soccer
+                Jersey
               </Text>
               <Text style={global.text}>Size L (12–14)</Text>
             </Column>
@@ -120,7 +122,7 @@ export const NikeReceiptEmail = () => (
                 USWNT 2022/23 Stadium Home
               </Text>
               <Text style={recomendations.text}>
-                Women's Nike Dri-FIT Soccer Jersey
+                Women&apos;s Nike Dri-FIT Soccer Jersey
               </Text>
             </Column>
             <Column style={recomendations.product} align="center">
@@ -133,7 +135,7 @@ export const NikeReceiptEmail = () => (
                 Brazil 2022/23 Stadium Goalkeeper
               </Text>
               <Text style={recomendations.text}>
-                Men's Nike Dri-FIT Short-Sleeve Football Shirt
+                Men&apos;s Nike Dri-FIT Short-Sleeve Football Shirt
               </Text>
             </Column>
             <Column style={recomendations.product} align="center">
@@ -143,7 +145,9 @@ export const NikeReceiptEmail = () => (
                 width="100%"
               />
               <Text style={recomendations.title}>FFF</Text>
-              <Text style={recomendations.text}>Women's Soccer Jacket</Text>
+              <Text style={recomendations.text}>
+                Women&apos;s Soccer Jacket
+              </Text>
             </Column>
             <Column
               style={{ ...recomendations.product, paddingRight: "4px" }}
@@ -156,7 +160,7 @@ export const NikeReceiptEmail = () => (
               />
               <Text style={recomendations.title}>FFF</Text>
               <Text style={recomendations.text}>
-                Women's Nike Pre-Match Football Top
+                Women&apos;s Nike Pre-Match Football Top
               </Text>
             </Column>
           </Row>
@@ -267,7 +271,7 @@ export const NikeReceiptEmail = () => (
           <Row>
             <Text style={{ ...footer.text, paddingTop: 30, paddingBottom: 30 }}>
               Please contact us if you have any questions. (If you reply to this
-              email, we won't be able to see it.)
+              email, we won&apos;t be able to see it.)
             </Text>
           </Row>
           <Row>
