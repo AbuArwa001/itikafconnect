@@ -8,5 +8,20 @@
         "SUPERADMIN",
         "tailwindcss",
         "uuidv"
+    ],
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "root",
+            "database": "welpurse",
+            "username": "root"
+        }
     ]
 }
